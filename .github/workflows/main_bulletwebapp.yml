@@ -30,12 +30,13 @@ jobs:
       # Therefore Commander should be moved to the docs folder.
       - name: Move Commander to Docs
         run: |
+          echo 'print current directory'
           pwd
           ls -lah
           cd docs
-          echo 'print docs contents'
           pwd
-          ls docs
+          echo 'print docs contents'
+          ls -lah
           shopt -s dotglob
           #mkdir -p docs/Commander
           mv checkout_commander/docs/Commander/* docs/Commander/*
