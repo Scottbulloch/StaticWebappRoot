@@ -38,9 +38,10 @@ jobs:
           tree -d 
           echo 'print checout_commander contents'
           ls -lah
-          cd docs
+          cd $GITHUB_WORKSPACE
+          echo 'print GITHUBWORKSPACE contents'
           pwd
-          echo 'print checout_commander/docs contents'
+          tree -d 
           ls -lah
           shopt -s dotglob
           #mkdir -p docs/Commander
