@@ -31,15 +31,16 @@ jobs:
       - name: Move Commander to Docs
         run: |
           echo 'print current directory'
+          tree
           pwd
           ls -lah
           cd checkout_commander
           pwd
           echo 'print checout_commander contents'
           ls -lah
-          cd ..\docs
+          cd docs
           pwd
-          echo 'print docs contents'
+          echo 'print checout_commander/docs contents'
           ls -lah
           shopt -s dotglob
           #mkdir -p docs/Commander
