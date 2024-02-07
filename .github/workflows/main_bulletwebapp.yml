@@ -10,6 +10,50 @@ on:
   workflow_dispatch:
 
 jobs:
+    
+  copydocs:
+    name: copy commander docs
+    runs-on: ubuntu-latest
+    steps:
+      #Checkout main of the current repo
+      - uses : actions/checkout@v4
+        with :
+          ref: main
+          
+      #Checkout the directory of the remote Repo
+      - uses : actions/checkout@v4
+        with :
+          ref: main
+          repository: 'Scottbulloch/StaticWebappOne'
+          path: 'checkout_commander'
+          sparse-checkout: 'docs/Commander/*'
+          sparse-checkout-cone-mode: false
+          #token: ${{ secrets.PAT_REPO_TOKEN }} ```     test garbage repos are public for testing
+
+      - name: Move Commander to Docs
+        # This step is needed because expo-github-action does not support paths.
+        # Therefore Commander should be moved to the docs folder.
+        run: |
+          echo 'print current directory'
+          pwd
+          ls -lah
+          cd checkout_commander
+          pwd
+          tree -d 
+          echo 'print checout_commander contents'
+          ls -lah
+          cd $GITHUB_WORKSPACE
+          echo 'print GITHUBWORKSPACE contents'
+          pwd
+          ls -lah
+          #shopt -s dotglob
+          echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
+          mv -f $GITHUB_WORKSPACE/checkout_commander/docs/Commander/* $GITHUB_WORKSPACE/docs/Commander/ -v
+          rm -rf $GITHUB_WORKSPACE/checkout_commander
+          echo 'Workspace After Move and delete'
+          ls -lah
+            
+         
   build:
     runs-on: ubuntu-latest
 
