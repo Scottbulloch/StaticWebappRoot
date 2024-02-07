@@ -1,0 +1,92 @@
+name: Build and deploy Node.js app to Azure Web App - bulletwebapp
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+    
+  copydocs:
+    name: copy commander docs
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses : actions/checkout@v4
+        with :
+          ref: main
+    
+      - uses : actions/checkout@v4
+        with :
+          ref: main
+          repository: 'Scottbulloch/StaticWebappOne'
+          path: 'docs/Commander'
+          sparse-checkout: 'docs/Commander'
+          sparse-checkout-cone-mode: false
+          #token: ${{ secrets.PAT_REPO_TOKEN }} ```     test garbage repos are public for testing
+
+      # This step is needed because expo-github-action does not support paths.
+      # Therefore Commander should be moved to the docs folder.
+      - name: Move Commander to Docs
+        run: |
+          pwd
+          ls -lah
+          cd $GITHUB_WORKSPACE
+          pwd
+          ls docs
+          shopt -s dotglob
+          #mkdir -p docs/Commander
+          #mv checkout_commander/docs/Commander docs/Commander
+          #rm -rf Scottbulloch
+          ls -lah    
+          
+  build:
+    runs-on: ubuntu-latest
+    needs: copydocs
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: node-app
+          path: release.zip
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: node-app
+
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+      
+      - name: 'Deploy to Azure Web App'
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'bulletwebapp'
+          slot-name: 'Production'
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_271B115FC1B643F6B5C15D3CEA677205 }}
