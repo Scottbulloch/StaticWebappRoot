@@ -31,11 +31,11 @@ jobs:
       - name: Move Commander to Docs
         run: |
           echo 'print current directory'
-          tree
           pwd
           ls -lah
           cd checkout_commander
           pwd
+          tree -d 
           echo 'print checout_commander contents'
           ls -lah
           cd docs
