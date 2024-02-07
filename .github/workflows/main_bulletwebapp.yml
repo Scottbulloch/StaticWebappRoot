@@ -21,8 +21,8 @@ jobs:
         with :
           ref: main
           repository: 'Scottbulloch/StaticWebappOne'
-          path: 'docs/Commander'
-          sparse-checkout: 'docs/Commander'
+          path: 'checkout_commander'
+          sparse-checkout: 'docs/Commander/*'
           sparse-checkout-cone-mode: false
           #token: ${{ secrets.PAT_REPO_TOKEN }} ```     test garbage repos are public for testing
 
@@ -32,12 +32,13 @@ jobs:
         run: |
           pwd
           ls -lah
-          cd $GITHUB_WORKSPACE
+          cd docs
+          Echo 'print docs contents'
           pwd
           ls docs
           shopt -s dotglob
           #mkdir -p docs/Commander
-          #mv checkout_commander/docs/Commander docs/Commander
+          mv checkout_commander/docs/Commander/* docs/Commander/*
           #rm -rf Scottbulloch
           ls -lah    
           
