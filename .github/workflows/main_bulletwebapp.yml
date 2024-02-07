@@ -33,7 +33,11 @@ jobs:
           echo 'print current directory'
           pwd
           ls -lah
-          cd docs
+          cd checkout_commander
+          pwd
+          echo 'print checout_commander contents'
+          ls -lah
+          cd ..\docs
           pwd
           echo 'print docs contents'
           ls -lah
