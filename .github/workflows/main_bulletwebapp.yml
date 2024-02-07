@@ -44,7 +44,7 @@ jobs:
           ls -lah
           #shopt -s dotglob
           echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
-          cp -r $GITHUB_WORKSPACE/checkout_commander/docs/Commander/* $GITHUB_WORKSPACE/docs/Commander/*
+          mv -f $GITHUB_WORKSPACE/checkout_commander/docs/Commander/* $GITHUB_WORKSPACE/docs/Commander/*
           rm -rf $GITHUB_WORKSPACE/checkout_commander
           echo 'Workspace After Move and delete'
           ls -lah
