@@ -33,7 +33,7 @@ jobs:
           pwd
           ls -lah
           cd docs
-          Echo 'print docs contents'
+          echo 'print docs contents'
           pwd
           ls docs
           shopt -s dotglob
