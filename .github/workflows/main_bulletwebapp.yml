@@ -92,7 +92,6 @@ jobs:
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
-        using: 'node20'
         with:
           name: node-app
 
@@ -102,7 +101,6 @@ jobs:
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
-        using: 'node20'
         with:
           app-name: 'bulletwebapp'
           slot-name: 'Production'
