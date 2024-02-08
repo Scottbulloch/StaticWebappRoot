@@ -43,8 +43,8 @@ jobs:
           tree -d 
           echo 'print checout_commander contents'
           ls -lah
-          cd $GITHUB_WORKSPACE
-          echo 'print GITHUBWORKSPACE contents'
+          cd /
+          echo 'print root contents'
           pwd
           ls -lah
           echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
