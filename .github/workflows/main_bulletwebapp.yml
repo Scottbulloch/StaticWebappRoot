@@ -36,6 +36,7 @@ jobs:
         run: |
           echo 'print current directory'
           pwd
+          ls -lah
 
           echo 'print checout_commander contents'
           cd checkout_commander
