@@ -34,31 +34,25 @@ jobs:
         # This step is needed because expo-github-action does not support paths.
         # Therefore Commander should be moved to the docs folder.
         run: |
-          echo 'print current directory'
+         echo 'print current directory'
           pwd
-          tree -d 
-          ls -lah
+
+          echo 'print checout_commander contents'
           cd checkout_commander
           pwd
-          tree -d 
-          echo 'print checout_commander contents'
-          ls -lah
-          cd /
-          echo 'print root contents'
-          pwd
-          ls -lah
-          cd ./
-          echo 'print ./ contents'
-          pwd
-          ls -lah
+          tree
+
+          echo 'docs/Commander before move'
+          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot
+          tree /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
+
           echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
           mv -f /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander/docs/Commander/* /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/ -v
           rm -rf /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander
-          echo 'Workspace After Move and delete'
-          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
-          pwd
-          tree
-          echo 'Move Commander to Docs.  Complete!!!'  
+
+          echo 'docs/Commander dir after move'
+          tree /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
+          echo 'move Commander contents to /docs/Comamnder.  Complete!!!'  
          
   build:
     runs-on: ubuntu-latest
