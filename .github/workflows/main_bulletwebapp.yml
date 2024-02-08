@@ -47,6 +47,10 @@ jobs:
           echo 'print root contents'
           pwd
           ls -lah
+          cd ./
+          echo 'print ./ contents'
+          pwd
+          ls -lah
           echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
           mv -f /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander/docs/Commander/* /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/ -v
           rm -rf /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander
