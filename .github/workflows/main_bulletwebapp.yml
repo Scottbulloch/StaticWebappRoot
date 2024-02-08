@@ -51,8 +51,10 @@ jobs:
           mv -f $GITHUB_WORKSPACE/checkout_commander/docs/Commander/* $GITHUB_WORKSPACE/docs/Commander/ -v
           rm -rf $GITHUB_WORKSPACE/checkout_commander
           echo 'Workspace After Move and delete'
-          ls -lah
-            
+          cd $GITHUB_WORKSPACE/docs/Commander/
+          pwd
+          tree -d 
+          echo 'EOF'  
          
   build:
     runs-on: ubuntu-latest
@@ -100,7 +102,7 @@ jobs:
       
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'bulletwebapp'
           slot-name: 'Production'
