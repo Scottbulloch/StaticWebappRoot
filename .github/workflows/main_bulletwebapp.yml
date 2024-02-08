@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #Checkout main of the current repo
-      - uses : actions/checkout@v4
-        with :
-          ref: main
+      #- uses : actions/checkout@v4
+      #  with :
+      #    ref: main
           
       #Checkout the directory of the remote Repo
       - uses : actions/checkout@v4
@@ -47,15 +47,14 @@ jobs:
           echo 'print GITHUBWORKSPACE contents'
           pwd
           ls -lah
-          #shopt -s dotglob
           echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
-          mv -f $GITHUB_WORKSPACE/checkout_commander/docs/Commander/* $GITHUB_WORKSPACE/docs/Commander/ -v
-          rm -rf $GITHUB_WORKSPACE/checkout_commander
+          mv -f /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander/docs/Commander/* /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/ -v
+          rm -rf /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander
           echo 'Workspace After Move and delete'
-          cd $GITHUB_WORKSPACE/docs/Commander/
+          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
           pwd
-          tree -d 
-          echo 'EOF'  
+          tree
+          echo 'Move Commander to Docs.  Complete!!!'  
          
   build:
     runs-on: ubuntu-latest
@@ -75,8 +74,12 @@ jobs:
           npm run build --if-present
           npm run test --if-present
       - name: Zip artifact for deployment
-        #run: zip release.zip ./* -r
-        run: zip release.zip $GITHUB_WORKSPACE/* -r
+        run: zip release.zip ./* -r
+          |
+          echo 'print current directory'
+          pwd
+          tree -d
+        #run: zip release.zip $GITHUB_WORKSPACE/* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
