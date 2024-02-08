@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #Checkout main of the current repo
-      #- uses : actions/checkout@v4
-      #  with :
-      #    ref: main
+      - uses : actions/checkout@v4
+        with :
+          ref: main
           
       #Checkout the directory of the remote Repo
       - uses : actions/checkout@v4
