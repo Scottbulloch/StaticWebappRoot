@@ -15,6 +15,16 @@ jobs:
     name: copy commander docs
     runs-on: ubuntu-latest
     steps:
+      - name: Not running stuff here
+        run: |
+          echo 'print current directory'
+          pwd
+          tree
+
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
       #Checkout main of the current repo
       - uses : actions/checkout@v4
         with :
@@ -55,18 +65,6 @@ jobs:
           cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
           tree 
           echo 'move Commander contents to /docs/Comamnder.  Complete!!!'  
-         
-  build:
-    runs-on: ubuntu-latest
-    needs: copydocs
-    steps:
-      #- uses: actions/checkout@v4
-      - name: Check Current Directory
-        run:  |
-          echo 'print current directory tree'
-          pwd
-          ls -lah
-          tree -d
       
       - name: Set up Node.js version
         uses: actions/setup-node@v4
