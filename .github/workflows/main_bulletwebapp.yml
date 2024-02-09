@@ -82,9 +82,9 @@ jobs:
         
       - name: Check Current Directory
         run: |
-          echo 'print current directory tree'
+          echo 'list current directory'
           pwd
-          tree -d
+          ls -lah
           
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
