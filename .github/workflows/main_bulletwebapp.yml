@@ -74,13 +74,15 @@ jobs:
           npm run build --if-present
           npm run test --if-present
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-          |
-          echo 'print current directory'
+        run: zip release.zip /home/runner/work/StaticWebappRoot/StaticWebappRoot/* -r
+        #run: zip release.zip ./* -r
+        
+      - name: Check Current Directory
+        run: |
+          echo 'print current directory tree'
           pwd
           tree -d
-        #run: zip release.zip $GITHUB_WORKSPACE/* -r
-
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
