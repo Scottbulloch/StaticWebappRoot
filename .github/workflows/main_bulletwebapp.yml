@@ -10,18 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
-    
-  copydocs:
-    name: Unused Placeholder
-    runs-on: ubuntu-latest
-    steps:
-      - name: Not running stuff here
-        run: |
-          echo 'Unused Placeholder'
-          
+
   build:
     runs-on: ubuntu-latest
-    needs: copydocs
     steps:
       #Checkout main of the current repo
       - uses : actions/checkout@v4
@@ -33,10 +24,10 @@ jobs:
         with :
           ref: main
           repository: 'Scottbulloch/StaticWebappOne'
-          path: 'checkout_commander'
           sparse-checkout: 'docs/Commander/*'
+          path: 'checkout_commander'
           sparse-checkout-cone-mode: false
-          #ssh-key: ${{ secrets.SSH_READ_ALL }}.   Snow Global Read all for go live
+          #ssh-key: ${{ secrets.SSH_READ_ALL }}. Uncomment for Snow Global Read all for go live to read from another Repo in Snow GH
 
       - name: Move Commander to Docs
         # This step is needed because expo-github-action does not support paths.
@@ -79,7 +70,7 @@ jobs:
         run: |
           cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/
           zip -r release.zip .
-        #run: zip release.zip ./* -r
+        #run: zip release.zip ./* -r       Commented out as the root path was incorrect and needed to be done at a diffrent folder level. 
         
       - name: Check Current Directory
         run: |
