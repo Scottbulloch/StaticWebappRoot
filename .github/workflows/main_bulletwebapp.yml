@@ -12,18 +12,16 @@ on:
 jobs:
     
   copydocs:
-    name: copy commander docs
+    name: Unused Placeholder
     runs-on: ubuntu-latest
     steps:
       - name: Not running stuff here
         run: |
-          echo 'print current directory'
-          pwd
-          tree
-
+          echo 'Unused Placeholder'
+          
   build:
     runs-on: ubuntu-latest
-    
+    needs: copydocs
     steps:
       #Checkout main of the current repo
       - uses : actions/checkout@v4
