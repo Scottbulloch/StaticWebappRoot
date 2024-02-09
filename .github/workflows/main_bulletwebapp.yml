@@ -76,9 +76,12 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+          
       - name: Zip artifact for deployment
-        run: zip release.zip /home/runner/work/StaticWebappRoot/StaticWebappRoot/* -r
-        #run: zip release.zip ./* -r
+        run: |
+          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/
+          zip -r release.zip .
+      #run: zip release.zip ./* -r
         
       - name: Check Current Directory
         run: |
@@ -90,7 +93,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: release.zip
+          path: /home/runner/work/StaticWebappRoot/StaticWebappRoot/release.zip
           
   deploy:
     runs-on: ubuntu-latest
