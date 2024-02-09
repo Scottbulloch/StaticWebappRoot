@@ -61,6 +61,12 @@ jobs:
     needs: copydocs
     steps:
       #- uses: actions/checkout@v4
+      - name: Check Current Directory
+        run:  |
+          echo 'print current directory tree'
+          pwd
+          ls -lah
+          tree -d
       
       - name: Set up Node.js version
         uses: actions/setup-node@v4
