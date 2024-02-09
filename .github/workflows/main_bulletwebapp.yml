@@ -60,9 +60,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: copydocs
     steps:
-      - uses: actions/checkout@v4
+      #- uses: actions/checkout@v4
       
-
       - name: Set up Node.js version
         uses: actions/setup-node@v4
         with:
