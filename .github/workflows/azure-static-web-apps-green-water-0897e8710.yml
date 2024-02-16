@@ -15,10 +15,43 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
+            #Checkout the directory of the remote Repo
+            
+      - uses : actions/checkout@v4
+        with :
+          ref: main
+          repository: 'Scottbulloch/StaticWebappOne'
+          sparse-checkout: 'docs/Commander/*'
+          path: 'checkout_commander'
+          sparse-checkout-cone-mode: false
+          #ssh-key: ${{ secrets.SSH_READ_ALL }}. Uncomment for Snow Global Read all for go live to read from another Repo in Snow GH
+
+      - name: Move Commander to Docs
+        # This step is needed because expo-github-action does not support paths.
+        # Therefore Commander should be moved to the docs folder.
+        run: |
+          echo 'print current directory'
+          pwd
+          ls -lah
+          echo 'print checout_commander contents'
+          cd checkout_commander
+          pwd
+          tree
+          echo 'docs/Commander before move'
+          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
+          tree 
+          echo 'relocate Contents from commander docs checkout to Correct folder in current deploy'
+          mv -f /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander/docs/Commander/* /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/ -v
+          rm -rf /home/runner/work/StaticWebappRoot/StaticWebappRoot/checkout_commander
+          echo 'docs/Commander dir after move'
+          cd /home/runner/work/StaticWebappRoot/StaticWebappRoot/docs/Commander/
+          tree 
+          echo 'move Commander contents to /docs/Comamnder.  Complete!!!'     
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
