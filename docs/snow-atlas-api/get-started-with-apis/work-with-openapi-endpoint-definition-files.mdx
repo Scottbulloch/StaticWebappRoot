@@ -1,0 +1,38 @@
+---
+sidebar_position: 3
+---
+
+# Work with OpenAPI endpoint definition files
+
+OpenAPI is a standard method of defining REST endpoints. You can import the OpenAPI into your favorite REST tool to explore the endpoints and execute calls. Postman is one of several possible REST tools that can be used for this purpose.
+
+To work with OpenAPI endpoint definition files in Postman:
+
+1. On the Postman Import dialog, paste the URL of the JSON file which defines the Snow Atlas API. This URL can be copied from the table below.
+
+   | API | URL |
+   | --- |  --- |
+   | SAM Agreements | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/agreements.json |
+   | SAM Applications | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/applications.json |
+   | SAM Computers | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/computers.json |
+   | SAM Custom objects | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/customobjects.json |
+   | SAM Datacenters/Clusters | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/dcc.json |
+   | SAM Licenses | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/licenses.json |
+   | SAM Mobile devices | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/mobiledevices.json |
+   | SAM Oracle | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/oracle.json |
+   | SAM User accounts | https://raw.githubusercontent.com/SnowSoftwareGlobal/snowatlas-integrations/main/api_specifications/useraccounts.json |
+   | Cloud Connectors | https://{region}.snowsoftware.io/api/cloudvisibility/cloud-connectors/v1/meta/http |
+   | Cloud Billing data | https://{region}.snowsoftware.io/api/cloudvisibility/normalized-billing-data/v1/meta/http |
+   | Cloud License Visibility resources | https://{region}.snowsoftware.io/api/clv/cloud-licensing-data/v1/meta/http |
+   
+   :::note
+
+   You can find your **Data region** in the **Snow Atlas settings** menu, in **Licenses and usage**. Your **Data region** is on the **General information** tab. For further information, see [General information](https://docs.snowsoftware.com/snow-atlas/en/UUID-2d4ce22b-e2a9-b7b0-44b8-0ecc55c2959f.html).
+
+   :::
+
+2. Use the Postman Documentation tab to visually preview each API endpoint definition. Examples are displayed for how to integrate different programming languages.
+
+3. A Postman collection was created as part of the Postman import. This collection can be used to execute REST calls directly from Postman.
+
+Snow Software does not own the third party trademarks, software, products, or tools (collectively, the “Third Party Products”) referenced herein. Third Party Product updates, including user interface updates, may not be reflected in this content.

@@ -1,0 +1,488 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloud Saved Views Service",
+    "description": "Handles configuration of saved views for a Cloud user.\n\nAll URL parameters must be correctly encoded. Malformed parameters will be ignored.\n",
+    "version": "v1",
+    "contact": {
+      "name": "Snow Software",
+      "url": "https://www.snowsoftware.com",
+      "email": "info@snowsoftware.com"
+    }
+  },
+  "paths": {
+    "/api/cloudvisibility/saved-views/v1/views": {
+      "get": {
+        "summary": "Get saved views",
+        "x-visibility": "portal",
+        "description": "Returns a collection of saved views existing on your dashboard. Most recently saved views will be displayed first.",
+        "tags": [
+          "Saved-Views"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedViewsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.savedviews.crud"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add saved view",
+        "x-visibility": "portal",
+        "description": "Adds a saved view to your dashboard.",
+        "tags": [
+          "Saved-Views"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedView"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/Created"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.savedviews.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/saved-views/v1/views/{id}": {
+      "delete": {
+        "summary": "Delete saved view",
+        "x-visibility": "portal",
+        "description": "Deletes a given saved view from your dashboard.",
+        "tags": [
+          "Saved-Views"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The unique ID of the saved view will be deleted from your dashboard.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "19c10f69-d5e7-4583-8d01-06ec6cb6b956"
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/components/responses/NoContent"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.savedviews.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/saved-views/v1/views/status": {
+      "get": {
+        "summary": "Get slots",
+        "x-visibility": "portal",
+        "description": "Returns the number of used and available slots for your dashboard.",
+        "tags": [
+          "Status"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.savedviews.crud"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "OK": {
+        "description": "OK - Your request succeeded."
+      },
+      "Created": {
+        "description": "Your request created something new. Usually, this is a call that used the POST method and will allow a GET method to retrieve it later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "19c10f69-d5e7-4583-8d01-06ec6cb6b956"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-06-28T10:22:12Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2022-06-28T10:22:12Z"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/components/schemas/SavedView"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "NoContent": {
+        "description": "No Content - Your request succeeded, but the response message was empty."
+      },
+      "BadRequest": {
+        "description": "Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.\nReturns an array of errors with any `code` in the list\n  * invalidJsonMessage\n  * groupByConflict\n  * invalidFilterScheme\n  * missingParameter\n  * notSupportedValue\n  * viewsLimitReached\n  * titleMustBeUnique\n  * combinationMustBeUnique\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetailedErrorResponse"
+            },
+            "example": {
+              "errors": [
+                {
+                  "code": "invalidJsonMessage",
+                  "message": "invalid json scheme"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found - The operation you requested failed because a resource associated with your request could not be found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetailedErrorResponse"
+            },
+            "example": {
+              "errors": [
+                {
+                  "code": "notFound",
+                  "message": "Entity not found"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error - Your request failed due to an internal error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetailedErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": 500,
+                "message": "An internal error occurred. Please contact the service administrator"
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "SavedViewsResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "19c10f69-d5e7-4583-8d01-06ec6cb6b956"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-06-28T10:22:12Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "example": "2022-06-28T10:22:12Z"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/components/schemas/SavedView"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "SavedView": {
+        "type": "object",
+        "required": [
+          "title",
+          "dateRange",
+          "granularity",
+          "primaryGroupBy",
+          "secondaryGroupBy",
+          "filters"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "My saved view"
+          },
+          "dateRange": {
+            "type": "string",
+            "enum": [
+              "monthToDate",
+              "previousMonth",
+              "last30Days",
+              "last3Months",
+              "absolute"
+            ],
+            "example": "last30Days"
+          },
+          "granularity": {
+            "type": "string",
+            "enum": [
+              "daily"
+            ]
+          },
+          "primaryGroupBy": {
+            "description": "Primary grouping level. A way to divide data into buckets. Cannot be the same as `secondaryGroupBy`",
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "example": "costDate"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "single",
+                  "tag"
+                ],
+                "example": "single"
+              }
+            }
+          },
+          "secondaryGroupBy": {
+            "description": "Secondary grouping level. Defines how data should be divided further within buckets. Cannot be the same as `primaryGroupBy`",
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "example": "AWS Storage"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "single",
+                  "tag"
+                ],
+                "example": "tag"
+              }
+            }
+          },
+          "filters": {
+            "type": "object",
+            "properties": {
+              "filterKey": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "cloudProvider": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "cloudProvider": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "values": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "properties": {
+          "used": {
+            "type": "integer",
+            "example": 1
+          },
+          "remaining": {
+            "type": "integer",
+            "example": 9
+          },
+          "limit": {
+            "type": "integer",
+            "example": 10
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "DetailedErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailedError"
+            },
+            "example": [
+              {
+                "code": "viewsLimitReached",
+                "message": "saved views limit was reached"
+              },
+              {
+                "code": "titleMustBeUnique",
+                "message": "must be unique",
+                "path": "['title']"
+              },
+              {
+                "code": "invalidFilterScheme",
+                "message": "must be not empty object array",
+                "path": "['filters']['serviceType']"
+              }
+            ]
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          }
+        }
+      },
+      "DetailedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The string status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          },
+          "path": {
+            "type": "string",
+            "description": "The path to invalid parameter. Uses Braced JSON Path syntax for request body or plain text for query parameter. [optional]"
+          }
+        }
+      }
+    }
+  }
+}

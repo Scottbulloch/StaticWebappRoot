@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: snowsoftwareglobal.github.io
+  annotations:
+    github.com/project-slug: SnowSoftwareGlobal/snowsoftwareglobal.github.io
+    devops.io/handled-by: repo-as-code
+    devops.io/version: v1
+    sonarqube.org/project-key: snowsoftwareglobal.github.io
+    circleci.com/project-slug: github/SnowSoftwareGlobal/snowsoftwareglobal.github.io
+  tags:
+    - atlas
+    - az-ug-github-devops
+spec:
+  type: service
+  lifecycle: unknown
+  owner: default/az-ug-github-devops

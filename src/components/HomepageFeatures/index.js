@@ -1,52 +1,43 @@
+import React from 'react';
 import clsx from 'clsx';
-import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import { Link } from 'react-router-dom';    
+
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
+    title: 'Developer Resources',
+    Svg: require('@site/static/img/undraw_api.svg').default,
+	linkTo: '',  
+    	description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        <a href={"https://docs-app.dev-snowsoftware.io/ccmo/index.html"}>Snow Atlas API reference material</a>.
       </>
     ),
-  },
-  {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
-  },
+  }
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({Svg, title, description, linkTo, href}) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
       <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
+        <h3>{renderTitle(...arguments)}</h3>
         <p>{description}</p>
       </div>
     </div>
   );
+}
+function renderTitle({title, linkTo, href}){
+  let feature = arguments[0];
+  if (feature.linkTo && feature.linkTo.length > 0){
+    return <Link to={feature.linkTo}>{feature.title}</Link>;
+  } else if (feature.href && feature.href.length > 0){
+    return <a href={feature.href}>{feature.title}</a>;
+  }
+  return feature.title;
 }
 
 export default function HomepageFeatures() {

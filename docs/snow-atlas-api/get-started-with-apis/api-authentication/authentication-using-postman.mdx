@@ -1,0 +1,57 @@
+# Authentication using Postman
+
+Snow Atlas supports authentication with OAuth2 directly in Postman to get an access token to use with Snow Atlas APIs.
+
+Access tokens that you retrieve using this client do not require any scope configuration. The permissions associated with the retrieved token reflect those of the user who configures Postman as described below.
+
+## Configure Postman
+
+Follow these steps to configure Postman to start an authorization flow.
+
+1. In Postman, open a new request and select the **Authorization** tab.
+
+2. For **Type**, select **OAuth 2.0**.
+
+3. For **Add authorization data to**, select **Request Headers**.
+
+4. In **Configure New Token**, in **Token Name**, enter a name for the token, for example, Snow Atlas.
+
+5. For **Grant Type**, select **Authorization Code (with PKCE)**.
+
+6. For **Callback URL**, select **Authorize using browser**.
+
+7. For **Auth URL**, enter `https://{region}.snowsoftware.io/idp/api/connect/authorize`.
+
+    :::note
+
+    You can find your **Data region** in the **Snow Atlas settings** menu, in **Licenses and usage**. Your **Data region** is on the **General information** tab. For further information, see [General information](https://docs.snowsoftware.com/snow-atlas/en/UUID-2d4ce22b-e2a9-b7b0-44b8-0ecc55c2959f.html).
+
+    :::
+
+8. For **Access Token URL**, enter `https://{region}.snowsoftware.io/idp/api/connect/token`.
+
+9. For **Client ID**, enter `b51472b3-e058-4379-cabc-08da4d1d33e5`.
+
+10. For **Code Challenge Method**, select **SHA-256**.
+
+11. For **Client Authentication**, select **Send client credentials in body**.
+
+12. Select **Get New Access Token**.
+
+13. To start an authorization flow, follow the instructions that appear.
+
+    :::tip
+
+    Ensure that pop-ups are allowed in your browser so that the instructions to proceed are displayed.
+
+    :::
+
+    When the authorization flow is complete, **Manage Access Tokens** appears.
+
+14. Select **Use Token**.
+
+15. Under **Current Token**, for **Header Prefix**, select **Bearer**.
+
+For more information on configuring Postman for authorization, refer to the Postman documentation on authorizing requests.
+
+Snow Software does not own the third party trademarks, software, products, or tools (collectively, the “Third Party Products”) referenced herein. Third Party Product updates, including user interface updates, may not be reflected in this content.

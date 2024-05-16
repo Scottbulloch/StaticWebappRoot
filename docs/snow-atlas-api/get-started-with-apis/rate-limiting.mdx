@@ -1,0 +1,11 @@
+---
+sidebar_position: 4
+---
+
+# Rate limiting
+
+Policy based rate limiting is used to throttle the number of requests against Snow Atlas APIs. Rate limiting policies are primarily based on IP addresses, clients and users, and any combinations of those.
+
+Clients that are rate limited receive a status code of 429 Too Many Requests, once the number of available requests has been exceeded. The backoff time, if any, is indicated by the `Retry-After` response header in seconds.
+
+A client that is rate limited can be blocked from making additional requests against individual endpoints or APIs in general, depending on the policy applied.

@@ -1,0 +1,3 @@
+# Third party disclaimer
+
+Snow Software does not own the third party trademarks, software, products, or tools (collectively, the “Third Party Products”) referenced herein. Third Party Product updates, including user interface updates, may not be reflected in this content.

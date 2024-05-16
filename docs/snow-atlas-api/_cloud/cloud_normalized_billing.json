@@ -1,0 +1,497 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloud Normalized Billing Data",
+    "description": "Serves normalized billing data.\n\nAll URL parameters must be correctly encoded. Malformed parameters will be ignored.\n",
+    "version": "v1",
+    "contact": {
+      "name": "Snow Software",
+      "url": "https://www.snowsoftware.com",
+      "email": "info@snowsoftware.com"
+    }
+  },
+  "paths": {
+    "/api/cloudvisibility/normalized-billing-data/v1/dimension-values": {
+      "get": {
+        "summary": "Get key values",
+        "x-visibility": "portal",
+        "description": "Returns a collection of values for a given key.\n",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "required": true,
+            "description": "Dimension to return values for.\n\n`Tags` key returns all tag keys and `Tags.*` is pattern where `*` matches concrete tag key. This will result in list of tag values for specified tag key.\nIt will include `missingTagKey` in case there are records which does not contain the specified tag key and `missingTagValue` as special label for empty tag value.\nExample tag key path: `?key=Tags.MyKey`\n\nFor any other dimension `missingValue` label will be included in results in case any record does not contain the key.\n",
+            "schema": {
+              "$ref": "#/components/schemas/Keys"
+            }
+          },
+          {
+            "name": "groupBy",
+            "in": "query",
+            "required": false,
+            "description": "Dimension which values should be grouped by.\n",
+            "schema": {
+              "$ref": "#/components/schemas/SharedGrouping"
+            }
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter the collection of billing records. Format of the query string parameter:\n\n```\n<filter name> <operator> <value>\n```\n\nFilter name | Description | Supported operators | Example\n:--- | --- | --- | ---\nCostDate | Filters results by CostDate | -eq,-ne,-gt,-ge,-lt,-le | (CostDate -ge 2022-03-31T22:00:00Z) -and (CostDate -le 2022-04-30T21:59:59Z)\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "(CostDate -ge 2022-03-31T22:00:00Z) -and (CostDate -le 2022-04-30T21:59:59Z)"
+            }
+          }
+        ],
+        "tags": [
+          "Dimension Values"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DimensionValuesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Dimension400"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.billingrecords.r"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/normalized-billing-data/v1/grouped-billing-records": {
+      "get": {
+        "summary": "Get aggregated billing records",
+        "x-visibility": "portal",
+        "description": "Returns a collection of billing records grouped by a given method.\n",
+        "tags": [
+          "Grouped Billing Records"
+        ],
+        "parameters": [
+          {
+            "name": "primaryGroupBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Grouping"
+            },
+            "required": true,
+            "description": "Primary grouping level. A way to divide data into buckets. Cannot be the same as `secondaryGroupBy`.\n\n`Tags.*` is pattern where `*` matches concrete tag key. It aggregates results using values for the tag key. Example tag key path: `?key=Tags.MyKey`\n"
+          },
+          {
+            "name": "secondaryGroupBy",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Grouping"
+            },
+            "required": false,
+            "description": "Secondary grouping level. Defines how data should be divided further within buckets. Cannot be the same as `primaryGroupBy`.\n\n`Tags.*` is pattern where `*` matches concrete tag key. It aggregates results using values for the tag key. Example tag key path: `?key=Tags.MyKey`\n"
+          },
+          {
+            "name": "secondaryGroupByMaxValues",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "example": 5,
+              "minimum": 1
+            },
+            "description": "Number of top secondary group buckets to return. Fox example, if client specifies 5, API will return 5 unique values. Others will be aggregated to bucket with name “aggregatedCostsKey“. Cannot be used without `secondaryGroupBy`.\n"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter the collection of grouped billing records.\nFormat of the query string parameter:\n\n```\n<filter name> <operator> <value>\n```\n\nTo filter by `No tag value` use `(Tags.value -eq \"\")`\n\nIn order to filter by `No Tag key` use negative equality for all other existing keys, like `(Tags.key -ne \"tag1\") -and (Tags.key -ne \"tagN\")`\n\nFilter name | Description | Supported operators | Example\n:--- | --- | --- | ---\nCostDate | Filters results by CostDate | -eq,-ne,-gt,-ge,-lt,-le, -in | (CostDate -ge 2022-03-31T22:00:00Z) -and (CostDate -le 2022-04-30T21:59:59Z)\nCloudProvider | Filters results by cloudProvider | -eq,-ne, -in | (CloudProvider -eq \"aws\")\nAccountId | Filters results by accountId | -eq,-ne, -in | (AccountId -eq \"73209182\")\nServiceType | Filters results by serviceType | -eq,-ne, -in | (ServiceType -eq \"Azure Instances\")\nCostCategory | Filters results by costCategory | -eq,-ne,-exists, -in | (CostCategory -eq \"Tax\")\nRegionCode | Filters results by regionCode | -eq,-ne,-exists, -in | (RegionCode -eq \"eastus\")\nResourceGroup | Filters results by resourceGroup | -eq,-ne,-exists, -in | (ResourceGroup -eq \"main-resources\")\nInstanceType | Filters results by instanceType | -eq,-ne,-exists, -in | (InstanceType -eq \"T2 Micro\")\nPurchaseOption | Filters results by purchaseOption | -eq,-ne,-exists, -in | (PurchaseOption -eq \"Partner\")\nTags.key | Filters results by tag key | -eq,-ne, -in | (Tags.key -eq \"Backup\")\nTags.value | Filters results by tag value | -eq,-ne, -in | (Tags.value -eq \"kubernetes:free\")\n",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "(CostDate -ge 2022-03-31T22:00:00Z) -and (CostDate -le 2022-04-30T21:59:59Z)"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The starting page in the result set.\n"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of results returned per page.\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingRecordsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Grouped400"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.billingrecords.r"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "SharedGrouping": {
+        "type": "string",
+        "example": "CloudProvider",
+        "description": "Does not include CostDate and Tags",
+        "enum": [
+          "CloudProvider",
+          "AccountId",
+          "ServiceType",
+          "RegionCode",
+          "ResourceGroup",
+          "InstanceType",
+          "PurchaseOption",
+          "CostCategory"
+        ]
+      },
+      "Grouping": {
+        "type": "string",
+        "example": "CostDate",
+        "description": "",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SharedGrouping"
+          }
+        ],
+        "enum": [
+          "CostDate",
+          "Tags.*"
+        ]
+      },
+      "Keys": {
+        "type": "string",
+        "example": "Tags",
+        "description": "Does not include CostDate",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SharedGrouping"
+          }
+        ],
+        "enum": [
+          "tags.*",
+          "tags"
+        ]
+      },
+      "CostDto": {
+        "type": "object",
+        "properties": {
+          "bucketName": {
+            "type": "string",
+            "example": "AWS"
+          },
+          "cost": {
+            "type": "string",
+            "example": "123.12"
+          }
+        }
+      },
+      "BucketDto": {
+        "type": "object",
+        "properties": {
+          "bucketedBy": {
+            "type": "string",
+            "example": "2022-04-01T02:00:00+02:00"
+          },
+          "costs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CostDto"
+            }
+          }
+        }
+      },
+      "TopCostDto": {
+        "type": "object",
+        "properties": {
+          "bucketName": {
+            "type": "string",
+            "example": "AWS"
+          }
+        }
+      },
+      "PaginationDto": {
+        "type": "object",
+        "properties": {
+          "page_number": {
+            "type": "number",
+            "example": 1
+          },
+          "page_size": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "BillingRecordsResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          },
+          "groupedBy": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "CostDate",
+              "CloudProvider"
+            ]
+          },
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationDto"
+              },
+              {
+                "example": {
+                  "page_number": 1,
+                  "page_size": 2
+                }
+              }
+            ]
+          },
+          "topItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopCostDto"
+            },
+            "example": [
+              {
+                "bucketName": "AWS"
+              },
+              {
+                "bucketName": "Azure"
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BucketDto"
+            },
+            "example": [
+              {
+                "bucketedBy": "2022-04-01T02:00:00Z",
+                "costs": [
+                  {
+                    "bucketName": "AWS",
+                    "cost": "10.12"
+                  },
+                  {
+                    "bucketName": "Azure",
+                    "cost": "1.87"
+                  }
+                ]
+              },
+              {
+                "bucketedBy": "2022-04-02T02:00:00Z",
+                "costs": [
+                  {
+                    "bucketName": "AWS",
+                    "cost": "9.22"
+                  },
+                  {
+                    "bucketName": "Azure",
+                    "cost": "2.16"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "DimensionValueDto": {
+        "type": "object",
+        "properties": {
+          "bucketName": {
+            "type": "string",
+            "example": "AWS"
+          },
+          "name": {
+            "type": "string",
+            "example": "API Management"
+          }
+        }
+      },
+      "DimensionValuesResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DimensionValueDto"
+            },
+            "example": [
+              {
+                "name": "API Management",
+                "bucketName": "AWS"
+              },
+              {
+                "name": "AWS CloudShell",
+                "bucketName": "AWS"
+              }
+            ]
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          }
+        }
+      },
+      "DetailedErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailedError"
+            }
+          }
+        }
+      },
+      "DetailedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The string status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          },
+          "path": {
+            "type": "string",
+            "description": "The path to invalid parameter. Uses syntax of Braced JSON Path for request body or plain text for query parameter. [optional]"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "OK - Your request succeeded."
+      },
+      "404": {
+        "description": "Not Found - The operation you requested failed because a resource associated with your request could not be found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "code": 404,
+              "message": "Entity not found"
+            }
+          }
+        }
+      },
+      "Dimension400": {
+        "description": "Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.\nReturns an array of errors with any `code` in the list\n  * invalidFilter\n  * missingParameter\n  * missingFilter\n  * notSupportedValue\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetailedErrorResponse"
+            },
+            "example": {
+              "errors": [
+                {
+                  "code": "missingParameter",
+                  "message": "parameter is required",
+                  "path": "key"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Grouped400": {
+        "description": "Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.\nReturns an array of errors with any `code` in the list\n  * invalidFilter\n  * invalidNumber\n  * missingParameter\n  * groupByConflict\n  * secondaryGroupByConflict\n  * notSupportedValue\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DetailedErrorResponse"
+            },
+            "example": {
+              "errors": [
+                {
+                  "code": "missingParameter",
+                  "message": "['' is not a valid value for 'primaryGroupBy': parameter is required]",
+                  "path": "primaryGroupB"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

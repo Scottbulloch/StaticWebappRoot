@@ -1,0 +1,1060 @@
+basePath: /api
+consumes:
+    - application/json
+definitions:
+    ActionRequest:
+        properties:
+            contractIds:
+                items:
+                    type: string
+                type: array
+                x-go-name: ContractIds
+        title: ActionRequest Request data from the frontend container contracts ids to be actioned (deleted, archived or restored).
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    Contract:
+        properties:
+            additionalServices:
+                items:
+                    $ref: '#/definitions/ContractAdditionalService'
+                type: array
+                x-go-name: AdditionalServices
+            agreementNumber:
+                type: string
+                x-go-name: AgreementNumber
+            archived:
+                type: boolean
+                x-go-name: Archived
+            archivedAt:
+                format: date-time
+                type: string
+                x-go-name: ArchivedAt
+            archivedBy:
+                type: string
+                x-go-name: ArchivedBy
+            companyName:
+                type: string
+                x-go-name: CompanyName
+            contacts:
+                items:
+                    $ref: '#/definitions/ContractContact'
+                type: array
+                x-go-name: Contacts
+            correlationId:
+                type: string
+                x-go-name: CorrelationId
+            cost:
+                format: double
+                type: number
+                x-go-name: Cost
+            country:
+                type: string
+                x-go-name: Country
+            createdAt:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            createdBy:
+                type: string
+                x-go-name: CreatedBy
+            createdByName:
+                type: string
+                x-go-name: CreatedByName
+            currency:
+                type: string
+                x-go-name: Currency
+            description:
+                type: string
+                x-go-name: Description
+            endDate:
+                format: date-time
+                type: string
+                x-go-name: EndDate
+            entitlements:
+                items:
+                    $ref: '#/definitions/ContractEntitlement'
+                type: array
+                x-go-name: Entitlements
+            globalId:
+                type: string
+                x-go-name: GlobalId
+            id:
+                type: string
+                x-go-name: Id
+            links:
+                items:
+                    type: string
+                type: array
+                x-go-name: Links
+            name:
+                type: string
+                x-go-name: Name
+            notificationStartTime:
+                format: int64
+                type: integer
+                x-go-name: NotificationStartTime
+            orderNumber:
+                type: string
+                x-go-name: OrderNumber
+            parentGlobal:
+                type: boolean
+                x-go-name: ParentGlobal
+            parentId:
+                type: string
+                x-go-name: ParentId
+            parentName:
+                type: string
+                x-go-name: ParentName
+            paymentType:
+                type: string
+                x-go-name: PaymentType
+            startDate:
+                format: date-time
+                type: string
+                x-go-name: StartDate
+            status:
+                type: string
+                x-go-name: Status
+            subcontracts:
+                items:
+                    $ref: '#/definitions/SubContract'
+                type: array
+                x-go-name: SubContracts
+            subsidiaryName:
+                type: string
+                x-go-name: SubsidiaryName
+            term:
+                type: string
+                x-go-name: Term
+            type:
+                type: string
+                x-go-name: Type
+            updatedAt:
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            updatedBy:
+                type: string
+                x-go-name: UpdatedBy
+            updatedByName:
+                type: string
+                x-go-name: UpdatedByName
+            vendor:
+                $ref: '#/definitions/Vendor'
+        title: Contract Defines the structure for an API contract.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractAdditionalService:
+        properties:
+            cost:
+                format: double
+                type: number
+                x-go-name: Cost
+            endDate:
+                format: date-time
+                type: string
+                x-go-name: EndDate
+            service:
+                type: string
+                x-go-name: Service
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractContact:
+        properties:
+            contactId:
+                type: string
+                x-go-name: ContactId
+            email:
+                type: string
+                x-go-name: Email
+            firstName:
+                type: string
+                x-go-name: FirstName
+            id:
+                type: string
+                x-go-name: Id
+            lastName:
+                type: string
+                x-go-name: LastName
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractEntitlement:
+        properties:
+            cost:
+                format: double
+                type: number
+                x-go-name: Cost
+            isManual:
+                type: boolean
+                x-go-name: IsManual
+            metric:
+                type: string
+                x-go-name: Metric
+            notes:
+                type: string
+                x-go-name: Notes
+            notificationStartTime:
+                format: int64
+                type: integer
+                x-go-name: NotificationStartTime
+            payMonth:
+                format: int64
+                type: integer
+                x-go-name: PayMonth
+            quantity:
+                format: int64
+                type: integer
+                x-go-name: Quantity
+            renewalDates:
+                items:
+                    format: date-time
+                    type: string
+                type: array
+                x-go-name: RenewalDates
+            subscriptionPlan:
+                type: string
+                x-go-name: SubscriptionPlan
+            subscriptionPlanId:
+                type: string
+                x-go-name: SubId
+            trial:
+                type: boolean
+                x-go-name: Trial
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractFilter:
+        properties:
+            field:
+                type: string
+                x-go-name: Field
+            parts:
+                items:
+                    $ref: '#/definitions/FilterParts'
+                type: array
+                x-go-name: Parts
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractIdsResponse:
+        properties:
+            id:
+                type: string
+                x-go-name: ContractId
+            parentId:
+                type: string
+                x-go-name: ParentId
+            subcontracts:
+                items:
+                    $ref: '#/definitions/SubContract'
+                type: array
+                x-go-name: SubContracts
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractListResponse:
+        properties:
+            info:
+                $ref: '#/definitions/Info'
+            items:
+                items:
+                    $ref: '#/definitions/ContractOverview'
+                type: array
+                x-go-name: Contracts
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractOverview:
+        properties:
+            additionalServices:
+                items:
+                    $ref: '#/definitions/ContractAdditionalService'
+                type: array
+                x-go-name: AdditionalServices
+            archived:
+                type: boolean
+                x-go-name: Archived
+            cost:
+                format: double
+                type: number
+                x-go-name: Cost
+            createdAt:
+                format: date-time
+                type: string
+                x-go-name: CreatedAt
+            createdBy:
+                type: string
+                x-go-name: CreatedBy
+            createdByName:
+                type: string
+                x-go-name: CreatedByName
+            currency:
+                type: string
+                x-go-name: Currency
+            description:
+                type: string
+                x-go-name: Description
+            endDate:
+                format: date-time
+                type: string
+                x-go-name: EndDate
+            entitlements:
+                items:
+                    $ref: '#/definitions/ContractEntitlement'
+                type: array
+                x-go-name: Entitlements
+            globalId:
+                type: string
+                x-go-name: GlobalId
+            id:
+                type: string
+                x-go-name: Id
+            name:
+                type: string
+                x-go-name: Name
+            owner:
+                type: string
+                x-go-name: Owner
+            parentId:
+                type: string
+                x-go-name: ParentId
+            parentName:
+                type: string
+                x-go-name: ParentName
+            startDate:
+                format: date-time
+                type: string
+                x-go-name: StartDate
+            status:
+                type: string
+                x-go-name: Status
+            subcontracts:
+                items:
+                    $ref: '#/definitions/SubContract'
+                type: array
+                x-go-name: SubContracts
+            subcontractsCount:
+                type: string
+                x-go-name: SubContractsCount
+            type:
+                type: string
+                x-go-name: Type
+            updatedAt:
+                format: date-time
+                type: string
+                x-go-name: UpdatedAt
+            updatedBy:
+                type: string
+                x-go-name: UpdatedBy
+            updatedByName:
+                type: string
+                x-go-name: UpdatedByName
+            vendor:
+                $ref: '#/definitions/Vendor'
+        title: ContractOverview Defines the structure for an API contact overview.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractPagination:
+        properties:
+            count:
+                format: int64
+                type: integer
+                x-go-name: Count
+            filters:
+                items:
+                    $ref: '#/definitions/ContractFilter'
+                type: array
+                x-go-name: Filters
+            offset:
+                format: int64
+                type: integer
+                x-go-name: Offset
+            sort:
+                $ref: '#/definitions/ContractSort'
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractSort:
+        properties:
+            ascending:
+                type: boolean
+                x-go-name: Ascending
+            field:
+                type: string
+                x-go-name: Field
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ContractsKPI:
+        properties:
+            active:
+                format: int64
+                type: integer
+                x-go-name: Active
+            activeCost:
+                format: double
+                type: number
+                x-go-name: ActiveCost
+            expiringIn30:
+                $ref: '#/definitions/ExpiringContractsKPI'
+            expiringIn60:
+                $ref: '#/definitions/ExpiringContractsKPI'
+            expiringIn90:
+                $ref: '#/definitions/ExpiringContractsKPI'
+            renewalCosts:
+                items:
+                    $ref: '#/definitions/RenewalCost'
+                type: array
+                x-go-name: RenewalCosts
+            total:
+                format: int64
+                type: integer
+                x-go-name: Total
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ErrorWrapper:
+        properties:
+            error:
+                description: the error
+                properties:
+                    id:
+                        description: the errorCode
+                        format: int64
+                        type: integer
+                        x-go-name: Code
+                    message:
+                        description: the message
+                        type: string
+                        x-go-name: Message
+                type: object
+                x-go-name: Error
+        title: ErrorWrapper The main error structure.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/docs
+    ExpiringContractsKPI:
+        properties:
+            cost:
+                format: double
+                type: number
+                x-go-name: Cost
+            count:
+                format: int64
+                type: integer
+                x-go-name: Count
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    ExportContract:
+        properties:
+            allSelected:
+                type: boolean
+                x-go-name: AllSelected
+            columns:
+                items:
+                    type: string
+                type: array
+                x-go-name: Columns
+            excludedRows:
+                items:
+                    type: string
+                type: array
+                x-go-name: ExcludedRows
+            fileName:
+                type: string
+                x-go-name: FileName
+            fileType:
+                type: string
+                x-go-name: FileType
+            filters:
+                items:
+                    $ref: '#/definitions/ContractFilter'
+                type: array
+                x-go-name: Filters
+            selectedRows:
+                items:
+                    type: string
+                type: array
+                x-go-name: SelectedRows
+            sort:
+                $ref: '#/definitions/ContractSort'
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    FilterParts:
+        properties:
+            filterType:
+                type: string
+                x-go-name: FilterType
+            value:
+                type: string
+                x-go-name: Value
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    FilteredGlobalContact:
+        properties:
+            items:
+                items:
+                    $ref: '#/definitions/GlobalContract'
+                type: array
+                x-go-name: Items
+            pagination:
+                $ref: '#/definitions/Pagination'
+        title: FilteredGlobalContact Defines the structure for an API global contact.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    GlobalContract:
+        properties:
+            assignedId:
+                type: string
+                x-go-name: AssignedId
+            contractId:
+                type: string
+                x-go-name: ContractId
+            description:
+                type: string
+                x-go-name: Description
+            name:
+                type: string
+                x-go-name: Name
+            parentId:
+                type: string
+                x-go-name: ParentId
+            source:
+                type: string
+                x-go-name: Source
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    Info:
+        properties:
+            count:
+                format: int32
+                type: integer
+                x-go-name: Count
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    Pagination:
+        properties:
+            page_number:
+                format: int64
+                type: integer
+                x-go-name: PageNumber
+            page_size:
+                format: int64
+                type: integer
+                x-go-name: PageSize
+            total_pages:
+                format: int64
+                type: integer
+                x-go-name: TotalPages
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    RelationContract:
+        properties:
+            id:
+                type: string
+                x-go-name: Id
+            name:
+                type: string
+                x-go-name: Name
+            relationProtected:
+                type: string
+                x-go-name: RelationProtected
+        title: RelationContract Defines the structure for an API contact relation.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    RenewalCost:
+        properties:
+            date:
+                format: date-time
+                type: string
+                x-go-name: Date
+            totalCost:
+                format: double
+                type: number
+                x-go-name: TotalCost
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    SubContract:
+        properties:
+            id:
+                type: string
+                x-go-name: Id
+            name:
+                type: string
+                x-go-name: Name
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+    User:
+        description: User represents the information of a single user
+        properties:
+            email:
+                type: string
+                x-go-name: Email
+            familyName:
+                type: string
+                x-go-name: FamilyName
+            givenName:
+                type: string
+                x-go-name: GivenName
+            tenantId:
+                type: string
+                x-go-name: TenantID
+            userId:
+                type: string
+                x-go-name: UserID
+        type: object
+        x-go-package: github.com/snowsoftwareglobal/iam-go-identityprovider
+    ValidationWrapper:
+        properties:
+            error:
+                description: The error
+                properties:
+                    id:
+                        description: The error code.
+                        format: int64
+                        type: integer
+                        x-go-name: Code
+                    message:
+                        description: The error message.
+                        type: string
+                        x-go-name: Message
+                type: object
+                x-go-name: Error
+        title: ValidationWrapper Main validation error structure.
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/docs
+    Vendor:
+        properties:
+            id:
+                type: string
+                x-go-name: Id
+            name:
+                type: string
+                x-go-name: Name
+        type: object
+        x-go-package: snowsoftware.com/platform/saas-contract-bff/entity
+host: westeurope.qa-snowsoftware.io
+info:
+    description: '# The purpose of this application is to manage contract data-access'
+    title: saas-contract-bff API
+    version: 1.0.0
+paths:
+    /saas/contracts/v1:
+        put:
+            description: Edits a contract.
+            operationId: EditContract
+            parameters:
+                - description: The ID of the contract to edit.
+                  in: query
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+                - description: Required fields for editing a contract.
+                  in: body
+                  name: Body
+                  required: true
+                  schema:
+                    properties:
+                        currency:
+                            type: string
+                            x-go-name: Currency
+                        name:
+                            type: string
+                            x-go-name: ContractName
+                        orderNumber:
+                            type: string
+                            x-go-name: OrderNumber
+                        startDate:
+                            type: string
+                            x-go-name: StartDate
+                    type: object
+            responses:
+                "200":
+                    $ref: '#/responses/EditedContractResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Update contract
+            tags:
+                - contracts
+    /saas/contracts/v1/:
+        get:
+            description: Returns a contract's details.
+            operationId: GetContractById
+            parameters:
+                - description: Id of the contract.
+                  in: query
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "200":
+                    $ref: '#/responses/ContractDetailsResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get contract
+            tags:
+                - contracts
+        post:
+            description: Creates a contract.
+            operationId: CreateContract
+            parameters:
+                - description: Details for creating a contract.
+                  in: body
+                  name: Body
+                  required: true
+                  schema:
+                    properties:
+                        currency:
+                            type: string
+                            x-go-name: Currency
+                        name:
+                            type: string
+                            x-go-name: Name
+                        orderNumber:
+                            type: string
+                            x-go-name: OrderNumber
+                        startDate:
+                            type: string
+                            x-go-name: StartDate
+                        vendor:
+                            $ref: '#/definitions/Vendor'
+                    type: object
+            responses:
+                "201":
+                    $ref: '#/responses/CreatedContractResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Add contract
+            tags:
+                - contracts
+    /saas/contracts/v1/archive:
+        post:
+            description: Archives one or several contracts.
+            operationId: ArchiveContracts
+            parameters:
+                - description: Ids of the contracts to perform action upon.
+                  in: body
+                  name: ActionRequest
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ActionRequest'
+            responses:
+                "200":
+                    $ref: '#/responses/ArchivedContractsResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Archive contracts
+            tags:
+                - contracts
+    /saas/contracts/v1/contracts-kpi:
+        get:
+            description: Returns a contract's key performance indicators.
+            operationId: GetContractsKPIs
+            parameters:
+                - description: KPI interval start.
+                  in: query
+                  name: fromDate
+                  required: true
+                  type: string
+                  x-go-name: FromDate
+                - description: KPI interval end.
+                  in: query
+                  name: toDate
+                  required: true
+                  type: string
+                  x-go-name: ToDate
+            responses:
+                "200":
+                    $ref: '#/responses/ContractsKPIResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get contract kpi data
+            tags:
+                - contracts
+    /saas/contracts/v1/delete:
+        delete:
+            description: Deletes one or several contracts.
+            operationId: DeleteContracts
+            parameters:
+                - description: 'Type of deletion, can be: delete,standalone,connect subcontracts.'
+                  in: query
+                  name: type
+                  type: string
+                  x-go-name: Type
+                - description: Name of new master contract if being re-assigned to a new parent.
+                  in: query
+                  name: newMasterName
+                  type: string
+                  x-go-name: NewMasterName
+                - description: Id of new master contract if being re-assigned to a new parent.
+                  in: query
+                  name: newMasterId
+                  type: string
+                  x-go-name: NewMasterId
+                - description: Ids of the contracts to perform action upon.
+                  in: body
+                  name: ActionRequest
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ActionRequest'
+            responses:
+                "200":
+                    $ref: '#/responses/DeletedContractsResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Delete contracts
+            tags:
+                - contracts
+    /saas/contracts/v1/global:
+        get:
+            description: Returns contracts from global agreement service.
+            operationId: getGlobalContracts
+            parameters:
+                - in: query
+                  name: nameFilter
+                  required: true
+                  type: string
+                  x-go-name: NameFilter
+                - default: saas-contracts
+                  in: query
+                  name: source
+                  required: true
+                  type: string
+                  x-go-name: Source
+            responses:
+                "200":
+                    $ref: '#/responses/GlobalContractsResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get global contracts
+            tags:
+                - contracts
+    /saas/contracts/v1/idp-users:
+        get:
+            description: Returns list of identity provider users.
+            operationId: getIdpUsers
+            responses:
+                "200":
+                    $ref: '#/responses/UserListResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get idp users
+            tags:
+                - contracts
+    /saas/contracts/v1/list:
+        post:
+            description: Returns a list of contracts.
+            operationId: ListContractsOverview
+            parameters:
+                - description: Filtering/pagination details of the requested list of contracts.
+                  in: body
+                  name: ListDetails
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ContractPagination'
+            responses:
+                "200":
+                    $ref: '#/responses/ContractListResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get contract overviews
+            tags:
+                - contracts
+    /saas/contracts/v1/metrics:
+        get:
+            description: Returns list of metrics for contracts.
+            operationId: listMetrics
+            responses:
+                "200":
+                    $ref: '#/responses/ListMetricsResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get contract metrics
+            tags:
+                - contracts
+    /saas/contracts/v1/relation:
+        get:
+            description: Returns candidate contracts for contract relationship by name or id.
+            operationId: GetRelationContracts
+            parameters:
+                - description: Name of the contract.
+                  in: query
+                  name: name
+                  required: true
+                  type: string
+                  x-go-name: Name
+                - description: Id of the contract.
+                  in: query
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "200":
+                    $ref: '#/responses/ContractRelationResponse'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get contracts relationship
+            tags:
+                - contracts
+    /saas/contracts/v1/restore:
+        post:
+            description: Restores one or several contracts.
+            operationId: RestoreContracts
+            parameters:
+                - description: Ids of the contracts to perform action upon.
+                  in: body
+                  name: ActionRequest
+                  required: true
+                  schema:
+                    $ref: '#/definitions/ActionRequest'
+            responses:
+                "200":
+                    $ref: '#/responses/RestoredContractsResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Restore contracts
+            tags:
+                - contracts
+    /saas/contracts/v1/subcontracts:
+        get:
+            description: Returns all subcontracts of a given contract.
+            operationId: GetSubContracts
+            parameters:
+                - description: Id of the contract.
+                  in: query
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "200":
+                    $ref: '#/responses/ContractOverviewResponse'
+                "400":
+                    $ref: '#/responses/errorValidation'
+                "500":
+                    $ref: '#/responses/errorResponse'
+            summary: Get subcontracts
+            tags:
+                - contracts
+produces:
+    - application/json
+responses:
+    ArchivedContractsResponse:
+        description: ArchivedContractsResponse Defines the structure for API archived contracts.
+        schema:
+            properties:
+                archived:
+                    description: The ID/s of the archived contract/s.
+                    type: string
+                    x-go-name: ArchivedId
+            type: object
+    ContractDetailsResponse:
+        description: ContractDetailsResponse Defines the structure for an API contract details.
+        schema:
+            $ref: '#/definitions/Contract'
+    ContractIds:
+        description: ContractIds Defines the structure for an API list of contractsIds.
+        schema:
+            $ref: '#/definitions/ContractIdsResponse'
+    ContractListResponse:
+        description: ContractListResponse Defines the structure for an API list of contracts.
+        schema:
+            $ref: '#/definitions/ContractListResponse'
+    ContractOverviewResponse:
+        description: ContractOverviewResponse Defines the structure for an API contract overview.
+        schema:
+            items:
+                $ref: '#/definitions/ContractOverview'
+            type: array
+    ContractRelationResponse:
+        description: ContractRelationResponse Defines the structure for an API contract relation.
+        schema:
+            items:
+                $ref: '#/definitions/RelationContract'
+            type: array
+    ContractsKPIResponse:
+        description: ContractsKPIResponse Defines the structure for API contract KPI.
+        schema:
+            $ref: '#/definitions/ContractsKPI'
+    CreatedContractResponse:
+        description: CreatedContractResponse Defines the structure for API created contract.
+        schema:
+            properties:
+                Contract:
+                    $ref: '#/definitions/Contract'
+            type: object
+    DeletedContractsResponse:
+        description: DeletedContractsResponse Defines the structure for API deleted contracts.
+        schema:
+            properties:
+                deleted:
+                    description: The ID/s of the deleted contract/s.
+                    type: string
+                    x-go-name: DeletedId
+            type: object
+    EditedContractResponse:
+        description: EditedContractResponse Defines the structure for API edited contract.
+        schema:
+            properties:
+                Contract:
+                    $ref: '#/definitions/Contract'
+            type: object
+    GlobalContractsResponse:
+        description: GlobalContractsResponse Defines the structure for an API global contracts.
+        schema:
+            items:
+                $ref: '#/definitions/FilteredGlobalContact'
+            type: array
+    ListMetricsResponse:
+        description: ListMetricsResponse Defines the structure for API contract metrics.
+        schema:
+            items:
+                type: string
+            type: array
+    RestoredContractsResponse:
+        description: RestoredContractsResponse Defines the structure for API restored contracts.
+        schema:
+            properties:
+                restored:
+                    description: The ID/s of the restored contract/s.
+                    type: string
+                    x-go-name: RestoredId
+            type: object
+    UserListResponse:
+        description: UserListResponse Defines the structure for an API idp user list.
+        schema:
+            items:
+                $ref: '#/definitions/User'
+            type: array
+    errorResponse:
+        description: ErrorResponse Message returned as a string.
+        schema:
+            $ref: '#/definitions/ErrorWrapper'
+    errorValidation:
+        description: ErrorValidation Validation errors defined as an array of strings.
+        schema:
+            $ref: '#/definitions/ValidationWrapper'
+schemes:
+    - https
+security:
+    - Bearer:
+        - '[]'
+securityDefinitions:
+    Bearer:
+        in: header
+        name: authorization
+        type: apiKey
+swagger: "2.0"

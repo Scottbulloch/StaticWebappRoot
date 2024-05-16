@@ -1,0 +1,968 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cloud Connectors",
+    "description": "Serves and manages cloud connectors.\n",
+    "version": "v1",
+    "contact": {
+      "name": "Snow Software",
+      "url": "https://www.snowsoftware.com",
+      "email": "info@snowsoftware.com"
+    }
+  },
+  "paths": {
+    "/api/cloudvisibility/cloud-connectors/v1/connectors": {
+      "get": {
+        "summary": "Get cloud connectors",
+        "x-visibility": "portal",
+        "description": "Returns a collection of cloud connectors.\n",
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The starting page in the result set.\n"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of results returned per page.\n"
+          }
+        ],
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add cloud connector configuration",
+        "x-visibility": "portal",
+        "description": "Creates a cloud connector configuration for any supported cloud connector type.",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudConnectorSaveRequest"
+              },
+              "examples": {
+                "AWS_S3": {
+                  "$ref": "#/components/examples/CloudConnectorSaveAWSRequest"
+                },
+                "AZURE_BLOB": {
+                  "$ref": "#/components/examples/CloudConnectorSaveAzureRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created - Your request created something new. Usually, this is a call that used the POST method and will allow a GET method to retrieve it later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorCreatedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/cloud-connectors/v1/connectors/{id}/retrievals": {
+      "get": {
+        "summary": "Get retrieval information",
+        "x-visibility": "portal",
+        "description": "Returns a collection of retrieval information for a given cloud connector.\n",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The unique ID of the cloud connector for which retrieval information will be returned."
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The starting page in the result set.\n"
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            },
+            "required": false,
+            "description": "The number of results returned per page.\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorsRetrievalResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/cloud-connectors/v1/connectors/{id}": {
+      "patch": {
+        "summary": "Update credentials",
+        "x-visibility": "portal",
+        "description": "Modifies the credentials for a given cloud connector.",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The unique ID of the cloud connector for which credentials will be modified.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudConnectorUpdateCredentialsRequest"
+              },
+              "examples": {
+                "AWS_S3": {
+                  "$ref": "#/components/examples/CloudConnectorUpdateAWSCredentialsRequest"
+                },
+                "AZURE_BLOB": {
+                  "$ref": "#/components/examples/CloudConnectorUpdateAzureCredentialsRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete cloud connector",
+        "x-visibility": "portal",
+        "description": "Deletes the given cloud connector.",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The unique ID of the cloud connector for which credentials will be deleted."
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted - Your request requires more time for the service to process.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmptyResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/cloud-connectors/v1/connectors/validate": {
+      "post": {
+        "summary": "Validate report name",
+        "x-visibility": "portal",
+        "description": "Validates that the given report name is unique across the given cloud connector type. This validation is also done whenever a cloud connector configuration is created.",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudConnectorValidateReportNameRequest"
+              },
+              "examples": {
+                "AWS_S3": {
+                  "$ref": "#/components/examples/CloudConnectorValidateAWSReportNameRequest"
+                },
+                "AZURE_BLOB": {
+                  "$ref": "#/components/examples/CloudConnectorValidateAzureReportNameRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorValidateReportNameResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/cloudvisibility/cloud-connectors/v1/connectors/test": {
+      "post": {
+        "summary": "Test cloud connector configuration",
+        "x-visibility": "portal",
+        "description": "Tests cloud connector configuration for any supported cloud connector type. This test is also done whenever a cloud connector configuration is created.",
+        "tags": [
+          "Cloud Connectors"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloudConnectorSaveRequest"
+              },
+              "examples": {
+                "AWS_S3": {
+                  "$ref": "#/components/examples/CloudConnectorSaveAWSRequest"
+                },
+                "AZURE_BLOB": {
+                  "$ref": "#/components/examples/CloudConnectorSaveAzureRequest"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK - Your request succeeded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudConnectorTestedResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": [
+              "cv.cloudconnectors.crud"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "CloudConnectorDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "f1013ed1-f81f-40c7-a817-b8b0bcf0c5c4"
+          },
+          "name": {
+            "type": "string",
+            "example": "Azure Snow"
+          },
+          "type": {
+            "type": "string",
+            "example": "Azure"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2022-04-01T02:00:00Z"
+          },
+          "status": {
+            "type": "object",
+            "properties": {
+              "contextId": {
+                "type": "string",
+                "example": "1256535321431234"
+              },
+              "updatedAt": {
+                "type": "string",
+                "example": "2022-04-01T02:00:00Z"
+              },
+              "type": {
+                "type": "string",
+                "example": "pending"
+              },
+              "errorCode": {
+                "type": "string",
+                "example": "Account-Connection-Error"
+              }
+            }
+          }
+        }
+      },
+      "PaginationDto": {
+        "type": "object",
+        "properties": {
+          "page_number": {
+            "type": "number",
+            "example": 1
+          },
+          "page_size": {
+            "type": "number",
+            "example": 10
+          }
+        }
+      },
+      "CloudConnectorTestedDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "bucketIsEmpty"
+              },
+              "message": {
+                "type": "string",
+                "example": "bucket does not contain any reports"
+              }
+            }
+          }
+        }
+      },
+      "CloudConnectorsResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "properties": {
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationDto"
+              },
+              {
+                "example": {
+                  "page_number": 1,
+                  "page_size": 1
+                }
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CloudConnectorDto"
+            }
+          }
+        }
+      },
+      "CloudConnectorUpdateCredentialsRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "credentials"
+        ],
+        "properties": {
+          "credentials": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CloudConnectorUpdateCredentialsAWSRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CloudConnectorUpdateCredentialsAzureRequest"
+              }
+            ]
+          }
+        }
+      },
+      "CloudConnectorSaveRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CloudConnectorTestRequest"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "CloudConnectorValidateReportNameRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "type",
+          "name"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "AWS_S3",
+              "AZURE_BLOB"
+            ]
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CloudConnectorTestRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "AWS_S3",
+              "AZURE_BLOB"
+            ]
+          },
+          "connectionDetails": {
+            "type": "object",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/CloudConnectorSaveAWSRequest"
+              },
+              {
+                "$ref": "#/components/schemas/CloudConnectorSaveAzureRequest"
+              }
+            ]
+          }
+        }
+      },
+      "CloudConnectorUpdateCredentialsAWSRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "accessKey",
+          "secretKey"
+        ],
+        "properties": {
+          "accessKey": {
+            "type": "string",
+            "example": "ADIAZCSR2LUYAYP42KQQ"
+          },
+          "secretKey": {
+            "type": "string",
+            "example": "khjcfgg3jh42ffFASD@34k2j"
+          }
+        }
+      },
+      "CloudConnectorUpdateCredentialsAzureRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "sasUrl"
+        ],
+        "properties": {
+          "sasUrl": {
+            "type": "string",
+            "example": "https://myaccount.blob.core.windows.net/pictures/profile.jpg?sv=2012-02-12&st=2009-02-09&se=2009-02-10&sr=c&sp=r&si=YWJjZGVmZw%3d%3d&sig=dD80ihBh5jfNpymO5Hg1IdiJIEvHcJpCMiCMnN%2fRnbI%3d"
+          }
+        }
+      },
+      "CloudConnectorSaveAWSRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "bucketName",
+          "reportPrefix",
+          "reportName",
+          "region",
+          "accessKey",
+          "secretKey"
+        ],
+        "properties": {
+          "bucketName": {
+            "type": "string",
+            "example": "cv-automation"
+          },
+          "reportPrefix": {
+            "type": "string",
+            "example": "cv"
+          },
+          "reportName": {
+            "type": "string",
+            "example": "datareport"
+          },
+          "region": {
+            "type": "string",
+            "example": "us-east-1"
+          },
+          "accessKey": {
+            "type": "string",
+            "example": "ADIAZCSR2LUYAYP42KQQ"
+          },
+          "secretKey": {
+            "type": "string",
+            "example": "khjcfgg3jh42ffFASD@34k2j"
+          }
+        }
+      },
+      "CloudConnectorSaveAzureRequest": {
+        "type": "object",
+        "x-visibility": "portal",
+        "required": [
+          "billingExportName",
+          "directory",
+          "sasUrl"
+        ],
+        "properties": {
+          "billingExportName": {
+            "type": "string",
+            "example": "cv-automation"
+          },
+          "directory": {
+            "type": "string",
+            "example": "cv"
+          },
+          "sasUrl": {
+            "type": "string",
+            "example": "https://myaccount.blob.core.windows.net/pictures/profile.jpg?sv=2012-02-12&st=2009-02-09&se=2009-02-10&sr=c&sp=r&si=YWJjZGVmZw%3d%3d&sig=dD80ihBh5jfNpymO5Hg1IdiJIEvHcJpCMiCMnN%2fRnbI%3d"
+          }
+        }
+      },
+      "CloudConnectorCreatedResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CloudConnectorDto"
+          }
+        ]
+      },
+      "CloudConnectorValidateReportNameResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "properties": {
+          "unique": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "CloudConnectorTestedResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CloudConnectorTestedDto"
+          }
+        ]
+      },
+      "CloudConnectorsRetrievalResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "properties": {
+          "pagination": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaginationDto"
+              },
+              {
+                "example": {
+                  "page_number": 1,
+                  "page_size": 1
+                }
+              }
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CloudConnectorRetrievalDto"
+            }
+          }
+        }
+      },
+      "CloudConnectorRetrievalDto": {
+        "type": "object",
+        "properties": {
+          "contextId": {
+            "type": "string",
+            "example": "ecc314f8-49c2-4c33-b2cc-ee44a23ab292"
+          },
+          "calendarMonth": {
+            "type": "string",
+            "example": "2022-04-01"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2022-04-01T01:00:00Z"
+          },
+          "lastInProgressTime": {
+            "type": "string",
+            "example": "2022-04-04T02:00:00Z"
+          },
+          "lastSuccessTime": {
+            "type": "string",
+            "example": "2022-04-01T01:00:00Z"
+          },
+          "type": {
+            "type": "string",
+            "example": "inProgress"
+          },
+          "errorCode": {
+            "type": "string",
+            "example": "Account-Connection-Error"
+          }
+        }
+      },
+      "EmptyResponse": {
+        "type": "object",
+        "x-visibility": "portal"
+      },
+      "CloudConnectorTestResponse": {
+        "type": "object",
+        "x-visibility": "portal",
+        "properties": {
+          "status": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CodeMessage"
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "ValidationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CodeMessage"
+            }
+          }
+        }
+      },
+      "CodeMessage": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "The identification code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The details."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The HTTP status code."
+          },
+          "message": {
+            "type": "string",
+            "description": "The error message."
+          }
+        }
+      }
+    },
+    "examples": {
+      "CloudConnectorSaveAWSRequest": {
+        "value": {
+          "type": "AWS_S3",
+          "connectionDetails": {
+            "bucketName": "cv-automation",
+            "reportPrefix": "cv",
+            "reportName": "datareport",
+            "region": "us-east-1",
+            "accessKey": "ADIAZCSR2LUYAYP42KQQ",
+            "secretKey": "khjcfgg3jh42ffFASD@34k2j"
+          }
+        }
+      },
+      "CloudConnectorSaveAzureRequest": {
+        "value": {
+          "type": "AZURE_BLOB",
+          "connectionDetails": {
+            "billingExportName": "cv-automation",
+            "directory": "cv",
+            "sasUrl": "https://myaccount.blob.core.windows.net/pictures/profile.jpg?sv=2012-02-12&st=2009-02-09&se=2009-02-10&sr=c&sp=r&si=YWJjZGVmZw%3d%3d&sig=dD80ihBh5jfNpymO5Hg1IdiJIEvHcJpCMiCMnN%2fRnbI%3d"
+          }
+        }
+      },
+      "CloudConnectorValidateAWSReportNameRequest": {
+        "value": {
+          "type": "AWS_S3",
+          "name": "datareport"
+        }
+      },
+      "CloudConnectorValidateAzureReportNameRequest": {
+        "value": {
+          "type": "AZURE_BLOB",
+          "name": "cv-automation"
+        }
+      },
+      "CloudConnectorTestAWSRequest": {
+        "value": {
+          "type": "AWS_S3",
+          "connectionDetails": {
+            "bucketName": "cv-automation",
+            "reportPrefix": "cv",
+            "reportName": "datareport",
+            "region": "us-east-1",
+            "accessKey": "ADIAZCSR2LUYAYP42KQQ",
+            "secretKey": "khjcfgg3jh42ffFASD@34k2j"
+          }
+        }
+      },
+      "CloudConnectorTestAzureRequest": {
+        "value": {
+          "type": "AZURE_BLOB",
+          "connectionDetails": {
+            "billingExportName": "cv-automation",
+            "directory": "cv",
+            "sasUrl": "https://myaccount.blob.core.windows.net/pictures/profile.jpg?sv=2012-02-12&st=2009-02-09&se=2009-02-10&sr=c&sp=r&si=YWJjZGVmZw%3d%3d&sig=dD80ihBh5jfNpymO5Hg1IdiJIEvHcJpCMiCMnN%2fRnbI%3d"
+          }
+        }
+      },
+      "CloudConnectorUpdateAWSCredentialsRequest": {
+        "value": {
+          "credentials": {
+            "accessKey": "ADIAZCSR2LUYAYP42KQQ",
+            "secretKey": "khjcfgg3jh42ffFASD@34k2j"
+          }
+        }
+      },
+      "CloudConnectorUpdateAzureCredentialsRequest": {
+        "value": {
+          "credentials": {
+            "sasUrl": "https://myaccount.blob.core.windows.net/pictures/profile.jpg?sv=2012-02-12&st=2009-02-09&se=2009-02-10&sr=c&sp=r&si=YWJjZGVmZw%3d%3d&sig=dD80ihBh5jfNpymO5Hg1IdiJIEvHcJpCMiCMnN%2fRnbI%3d"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "OK - Your request succeeded."
+      },
+      "201": {
+        "description": "Created - Your request created something new. Usually, this is a call that used the POST method and will allow a GET method to retrieve it later."
+      },
+      "202": {
+        "description": "Accepted - Your request requires more time for the service to process."
+      },
+      "400": {
+        "description": "Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "errors": [
+                {
+                  "code": "invalidJson",
+                  "message": "request is not a valid json"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found - The operation you requested failed because a resource associated with your request could not be found.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "code": 404,
+              "message": "Entity not found"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error - Your request failed due to an internal error.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "code": 500,
+              "message": "An internal error occurred. Please contact the service administrator"
+            }
+          }
+        }
+      }
+    }
+  }
+}

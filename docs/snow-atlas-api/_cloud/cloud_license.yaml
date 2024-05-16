@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: Cloud License Visibility Resources
+  description: |
+    Serves and manages cloud license data.
+  version: 1.0.0
+  contact:
+    name: Snow Software
+    url: https://www.snowsoftware.com
+    email: info@snowsoftware.com
+
+paths:
+  /clv/cloud-licensing-data/v1/resources:
+    get:
+      summary: Get cloud resources
+      description: |
+        Returns a collection of cloud resources.
+      tags:
+        - Resources
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+      responses:
+        '200':
+          description: OK - Your request succeeded.
+          content:
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/Resources'
+              }
+            }
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+
+  parameters:
+
+    PageSize:
+      name: page_size
+      in: query
+      required: false
+      description: |
+        The number of results returned per page.
+      schema:
+        type : integer
+        default: 100
+        minimum: 1
+
+    PageNumber:
+      name: page_number
+      in: query
+      required: false
+      description: |
+        The starting page in the result set.
+      schema:
+        type : integer
+        format : int64
+        default: 1
+
+    From:
+      name: from
+      in: query
+      required: false
+      description: |
+        The start of the time range.
+      schema:
+        type : string
+        format: date-time
+
+    To:
+      name: to
+      in: query
+      required: false
+      description: |
+        The end of the time range.
+      schema:
+        type : string
+        format: date-time
+
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The HTTP status code.
+        message:
+          type: string
+          description: The error message.
+
+    Resources:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceItem'
+
+    ResourceItem:
+      type: object
+      required:
+        - resourceType
+        - resourceId
+        - name
+        - account
+      properties:
+        resourceType:
+          type: string
+          description: The type of the resource.
+          example: vm
+        resourceId:
+          type: string
+          description: The unique ID of the resource.
+          example: /subscriptions/3bef3b74-97aa-4a6e-b97b-3f5dbf47b599/resourceGroups/RM-ALEDUB-WIN2022_group/providers/Microsoft.Compute/virtualMachines/RM-ALEDUB2022
+        name:
+          type: string
+          description: The resource name.
+          example: RM-ALEDUB2022
+        account:
+          type: string
+          description: The account associated with the resource.
+          example: f76c28a1-0b62-d849-98fd-8cf2516570ce
+        usageAccount:
+          type: string
+          description: The usage account associated with the resource.
+          example: 3b9f3b44-97aa-4a6e-277b-3f5ebf47b569
+        resourceGroup:
+          type: string
+          description: The resource group that contains the resource.
+          example: rm-aledub-win2022_group
+        instanceType:
+          type: string
+          description: The instance type of a compute resource.
+          example: Standard_D4ads_v5
+        imageId:
+          type: string
+          description: The unique ID of the resource's image.
+          example: Image Windows-10
+        imageSku:
+          type: string
+          description: The SKU for the resource's image.
+          example: win10-21h2-pro-g2
+        imageVersion:
+          type: string
+          description: The version of the resource's image.
+          example: 19044.1889.220805
+        byolType:
+          type: string
+          description: The bring your own license type of the resource.
+          example: Windows_Client
+        licenseStatus:
+          type: string
+          description: The status of the resource's license.
+          example: Eligible
+
+  responses:
+    "500":
+      description: Internal Server Error - Your request failed due to an internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: 500
+              message: The service encountered an unexpected condition that prevented it from fulfilling the request.

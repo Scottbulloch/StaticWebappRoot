@@ -1,141 +1,205 @@
 // @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
+// Note: type annotations allow type checking and IDEs autocompletion
 
-import {themes as prismThemes} from 'prism-react-renderer';
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'AzureWebapp',
-  tagline: 'Serverless is the best!',
-  favicon: 'img/favicon.ico',
-
-  // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
+  title: 'Snow Docs',
+  tagline: 'Documentation to help you configure and use Snow Software products',
+  url: 'https://docs-app.dev-snowsoftware.io/',
   baseUrl: '/',
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
-
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
+  favicon: 'img/favicon.ico',
+  organizationName: 'Snow Software', // Usually your GitHub org/user name.
+  projectName: 'docusaurus', // Usually your repo name.
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: "en",
+    locales: ["en"],
+    localeConfigs: {
+      en: {
+        htmlLang: 'en-us',
+      },
+    },
   },
-
+  noIndex: true, // This option adds <meta name="robots" content="noindex, nofollow"> to every page to tell search engines to avoid indexing the site. Remove this when going into production.
   presets: [
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: './sidebars.js',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          sidebarPath: require.resolve('./sidebars.js'),
+          routeBasePath: '/', // Serve the docs at the site's root
+          // Please change this to your repo. TD- Hiding this. It allows the Edit this page link on pages
+          // editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // Please change this to your repo. TD- Hiding this. It allows the Edit this page link on pages
+          // editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: require.resolve('./src/css/custom.css'),
         },
+      }), 
+    ],
+    [
+      'redocusaurus',
+      {
+        // Plugin Options for loading OpenAPI files
+        debug: Boolean(process.env.DEBUG || process.env.CI),
+        config: 'redocly.yaml',
+        specs: [
+          
+          {
+            id: 'sam_api_computers',
+            //spec: 'docs/snow-atlas-api/sam/computers.json',
+            spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
+            route: 'docs/snow-atlas-api/sam/computers',
+          },
+          {
+            id: 'sam_api_customfields',
+            //spec: 'docs/snow-atlas-api/sam/agreements.json',
+            spec: 'https://westeurope.snowsoftware.io/api/customfields/meta/http',
+            route: 'docs/snow-atlas-api/sam/agreements',
+          },  
+        ],
+        // Theme Options for modifying how redoc renders them
+        theme: {
+          // Change with your site colors
+          primaryColor: '#1890ff',
+        },
+      },
+    ],
+  ],
+  themes: [
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      ({
+        // ... Your options.
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        docsRouteBasePath: "/",
+        hashed: true,
       }),
     ],
   ],
-
-  themeConfig:
+  themeConfig: {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
-      navbar: {
-        title: 'AzureWebapp',
-        logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+    announcementBar: {
+        id: 'Site_Notice',
+        content:
+          'This site is Temporary! Please use the following link for GA API documentation: <a target="_blank" rel="noopener noreferrer" href="https://docs.snowsoftware.io/snow-atlas-api/resources/"> https://docs.snowsoftware.io/snow-atlas-api/resources/ </a>.',
+        backgroundColor: '#20232a',
+        textColor: '#fff',
+        isCloseable: false,
+      },
+    navbar: {
+      title: 'Snow Atlas API Beta Docs',
+      logo: {
+        alt: 'Snow Beta Docs Home',
+        src: 'img/logo.svg',
+      },
+      items: [
+        //{
+        //  type: 'doc',
+        //  docId: 'snow-atlas/index',
+        //  position: 'left',
+        //  label: 'Snow Atlas',
+        //},
+        //{
+        //  type: 'doc',
+        //  docId: 'snow-software-products/index',
+        //  position: 'left',
+        //  label: 'Other products',
+        //},
+        //{
+        //  type: 'doc',
+        //  docId: 'atlas-api/index',
+        //  position: 'left',
+        //  label: 'Developer resources',
+        //},
+        {
+          type: 'dropdown',
+          label: 'More resources',
+          position: 'left',
+          items: [
+        //    {
+        //      type: 'doc',
+        //      docId: 'release-notes/index',
+        //      label: 'Release notes',
+        //    },
+        //    {
+        //     to: '/videos',
+        //      label: 'Videos',
+        //    },
+            {
+              href: 'https://docs.snowsoftware.com/',
+              label: 'Documentation',
+            },
+            {
+              href: 'https://community.snowsoftware.com/s/',
+              label: 'Community',
+            },
+          ],
         },
-        items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
+        //{
+        //  to: '/blog',
+        //  label: 'Blog',
+        //},
+        //{
+        //  type: 'localeDropdown',
+        //  position: 'right',
+        //},
+        {
+          type: 'search',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      links: [
+        {
+          label: 'Terms of use',
+          href: 'https://www.snowsoftware.com/legal/termsofuse',
+        },
+        {
+          label: 'Privacy policy',
+          href: 'https://www.snowsoftware.com/seo/legal-privacy-policy',
+        },
+        {
+          label: 'Data protection',
+          href: 'https://www.snowsoftware.com/legal/dataprotection',
+        },
+        {
+          label: 'Subscription center',
+          href: 'https://go.snowsoftware.com/subscription-center.html',
+        },
+        {
+          label: 'Community',
+          href: 'https://community.snowsoftware.com/s/',
+        },
+        {
+          label: 'Docs Feedback',
+          href: 'mailto:docsportal-feedback@snowsoftware.com', 
+        },
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Snow Software`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+    },
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: true,
       },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: prismThemes.github,
-        darkTheme: prismThemes.dracula,
-      },
-    }),
+    },
+  },
 };
 
-export default config;
+ module.exports = config;

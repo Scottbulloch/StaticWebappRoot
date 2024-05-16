@@ -6,25 +6,105 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-color-primary: #142636;
+  --ifm-color-primary-dark: #176abd;
+  --ifm-color-primary-darker: #1564b3;
+  --ifm-color-primary-darkest: #115393;
+  --ifm-color-primary-light: #1e82e4;
+  --ifm-color-primary-lighter: #2988e5;
+  --ifm-color-primary-lightest: #4899e9;
+
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #00b2d5;
+  --ifm-color-primary-dark: #2d8ae6;
+  --ifm-color-primary-darker: #1f82e4;
+  --ifm-color-primary-darkest: #176bbf;
+  --ifm-color-primary-light: #63a8ec;
+  --ifm-color-primary-lighter: #71b0ee;
+  --ifm-color-primary-lightest: #9ac7f3;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='light'] .footer__link-item:hover {
+    color: #00b2d5;
+}
+body {
+
+  font-size: 0.95rem;
+}
+
+p {
+  font-family: "Roboto", Verdana, "Helvetica Neue", "Segoe UI", sans-serif-regular, sans-serif, FontAwesome;
+  font-size: 0.95rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+a {
+  color: #00b2d5;
+}
+
+.menu__caret:before {
+  height: .85rem;
+  width: .85rem;
+}
+
+navbar {
+  border-bottom-width: 2px;
+  border-bottom-color: #00b2d5;
+  border-bottom-style: solid;
+}
+
+.navbar__title {
+  font-size: large;
+}
+
+.navbar--fixed-top {
+  border-bottom-width: 2px;
+  border-bottom-color: #00b2d5;
+  border-bottom-style: solid;
+}
+
+.heroBanner_src-pages-index-module {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.hero__title {
+  font-size: 2.5rem;
+}
+
+.hero__subtitle {
+  font-size: 1.25rem;
+}
+
+.hidden {
+display: none !important;
 }

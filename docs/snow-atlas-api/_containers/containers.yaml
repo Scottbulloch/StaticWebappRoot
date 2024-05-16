@@ -1,0 +1,1317 @@
+openapi: 3.0.3
+
+info:
+  version: v1
+  title: SAM Containers
+  description: API for exploring vendors, applications, and containers.
+  contact:
+    name: Snow Software, Inc.
+    url: https://www.snowsoftware.com
+
+servers:
+  - url: https://australiasoutheast.snowsoftware.io
+  - url: https://eastus2.snowsoftware.io
+  - url: https://westeurope.snowsoftware.io
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Application families
+  - name: Applications
+  - name: Containers
+  - name: Vendors
+
+paths:
+
+  /api/sam/containers/v1/application-families/{id}:
+    get:
+      summary: Get application family
+      description: Returns the details of a given application family.
+      operationId: "getApplicationFamilyById"
+      tags:
+        - Application families
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the application family for which details will be returned.
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ApplicationFamilyDetails'
+              }
+            }
+          }
+        }
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/application-families/{id}/containers:
+    get:
+      summary: Get application family containers
+      description: Returns a collection of containers running applications which belong to a given application family.
+      operationId: "getApplicationFamilyContainers"
+      tags:
+        - Application families
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the application family for which a collection of containers running applications belonging to that application family will be returned.
+          schema: {
+            "type" : "string"
+          }
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - name: filter
+          in: query
+          description: |
+            Filter the collection of containers. Format of the query string parameter:
+    
+            ```
+            ?filter=<filter name> <operator> <value>
+            ```
+
+            Filter name | Description | Data type | Example
+            :--- | --- | --- | ---
+            applicationEdition | The edition of the application | String | ?filter=applicationEdition -contains "Enterprise"
+            applicationName | The name of the application | String | ?filter=applicationName -contains "Oracle Database"
+            applicationVersion | The version of the application | String | ?filter=applicationVersion -eq "12c"
+            clientId | The client ID specified in the cluster the container belongs to | String | ?filter=clientId -eq "20129b99-d6f6-4675-7f6e-08d9ab3864d1"
+            clientName | The client name specified in the cluster the container belongs to | String | ?filter=clientName -contains "prod"
+            cpuLimit | The container CPU limit | Number | ?filter=cpuLimit -gt 2000
+            endTime | The time the container stopped | Date | ?filter=(endTime -gt "2021-04-01") -and (endTime -lt "2021-06-30")
+            imageId | The ID of the image used by the container | String | ?filter=imageId -eq "sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d"
+            imageName | The name of the image used by the container | String | ?filter=imageName -eq "oracle:12.1.0"
+            name | The name of the container | String | ?filter=name -eq "db"
+            namespace | The namespace of the container | String | ?filter=namespace -eq "prod"
+            nodeId | The ID of the node the container belongs to | String | ?filter=nodeId -eq "72151921-99f0-4f83-bff5-a5017ca10171"
+            nodeName | The name of the node the container belongs to | String | ?filter=nodeName -eq "aks-agentpool-15631278-vmss000001"
+            podId | The ID of the pod the container belongs to | String | ?filter=podId -eq "e9c2a3fe-26a3-475b-8aa5-66d2d42bc8ee"
+            podName | The name of the pod the container belongs to | String | ?filter=podName -eq "oracle_db"
+            repository | The repository where the image is retrieved from | String | ?filter=repository -eq "prod.registry.snow.com"
+            startTime | The time the container started | Date | ?filter=(startTime -gt "2021-01-01") -and (startTime -lt "2021-03-31")
+
+            For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+          required: false
+          schema: {
+            "type" : "string"
+          }
+        - name: sort
+          in: query
+          description: |
+            Sort the collection of containers. Format of the query string parameter:
+    
+            ```
+            ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+            ```
+
+            Field name | Description | Example
+            :--- | --- | ---
+            applicationName | The name of the application | ?sort=applicationName:asc
+            applicationEdition | The edition of the application | ?sort=applicationEdition:desc
+            applicationVersion | The version of the application | ?sort=applicationVersion:asc
+            clientId | The client ID specified in the cluster the container belongs to | ?sort=clientId:asc
+            clientName | The client name specified in the cluster the container belongs to | ?sort=clientName:desc
+            cpuLimit | The container CPU limit | ?sort=cpuLimit:asc
+            endTime | The container end time | ?sort=endTime:desc
+            name | The name of the container | ?sort=name:asc
+            startTime | The container start time | ?sort=startTime:desc
+          required: false
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ApplicationFamilyContainers'
+              }
+            }
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/applications:
+    get:
+      summary: Get applications
+      description: Returns a collection of applications.
+      operationId: "getApplications"
+      tags:
+        - Applications
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: filter
+          in: query
+          description: |
+            Filter the collection of applications. Format of the query string parameter:
+
+            ```
+            ?filter=<filter name> <operator> <value>
+            ```
+
+            Filter name | Description | Data type | Example
+            :--- | --- | --- | ---
+            edition | The edition of the application | String | ?filter=edition -eq "Enterprise"
+            familyName | The application family | String | ?filter=familyName -eq "Oracle Database"
+            isLicenseRequired | Is a license required | String | ?filter=isLicenseRequired -eq true
+            name | The name of the application | String | ?filter=name -eq "Oracle Database Enterprise Edition 12c"
+            vendorName | The name of the application vendor | String | ?filter=vendorName -eq "Oracle"
+            version | The version of the application | String | ?filter=version -eq "12c"
+
+            For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+          required: false
+          schema: {
+            "type" : "string"
+          }
+        - name: sort
+          in: query
+          description: |
+            Sort the collection of applications. Format of the query string parameter:
+
+            ```
+            ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+            ```
+
+            Field name | Description | Example
+            :--- | --- | ---
+            familyName | The application family | ?sort=familyName:asc
+            isLicenseRequired | Is a license required | ?sort=isLicenseRequired:desc
+            name | The name of the application | ?sort=name:asc
+          required: false
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/Applications'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/applications/{id}:
+    get:
+      summary: Get application
+      description: Returns the details of a given application.
+      operationId: "getApplicationById"
+      tags:
+        - Applications
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the application for which details will be returned.
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ApplicationDetails'
+              }
+            }
+          }
+        }
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/applications/{id}/containers:
+    get:
+      summary: Get application containers
+      description: Returns a collection of containers running a given application.
+      operationId: "getApplicationContainers"
+      tags:
+        - Applications
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the application for which a collection of containers running that application will be returned.
+          schema: {
+            "type" : "string"
+          }
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/ContainersFilter'
+        - $ref: '#/components/parameters/ContainersSort'
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/Containers'
+              }
+            }
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/containers:
+    get:
+      summary: Get containers
+      description: Returns a collection of containers.
+      operationId: "getContainers"
+      tags:
+        - Containers
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/ContainersFilter'
+        - $ref: '#/components/parameters/ContainersSort'
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/Containers'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/containers/{id}:
+    get:
+      summary: Get container
+      description: Returns the details of a given container.
+      operationId: "getContainerById"
+      tags:
+        - Containers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the container for which details will be returned.
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ContainerDetails'
+              }
+            }
+          }
+        }
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/containers/{id}/applications:
+    get:
+      summary: Get container applications
+      description: Returns a collection of applications in a given container.
+      operationId: "getContainerApplications"
+      tags:
+        - Containers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the container for which a collection of applications in that container will be returned.
+          schema: {
+            "type" : "string"
+          }
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: filter
+          in: query
+          description: |
+            Filter the collection of applications in a container. Format of the query string parameter:
+
+            ```
+            ?filter=<filter name> <operator> <value>
+            ```
+
+            Filter name | Description | Data type | Example
+            :--- | --- | --- | ---
+            edition | The edition of the application | String | ?filter=edition -eq "Enterprise"
+            familyName | The application family | String | ?filter=familyName -eq "Oracle Database"
+            isLicenseRequired | Is a license required | String | ?filter=isLicenseRequired -eq true
+            name | The name of the application | String | ?filter=name -eq "Oracle Database Enterprise Edition 12c"
+            vendorName | The name of the application vendor | String | ?filter=vendorName -eq "Oracle"
+            version | The version of the application | String | ?filter=version -eq "12c"
+ 
+            For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+          required: false
+          schema: {
+            "type" : "string"
+          }
+        - name: sort
+          in: query
+          description: |
+            Sort the collection of applications in a container. Format of the query string parameter:
+
+            ```
+            ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+            ```
+
+            Field name | Description | Example
+            :--- | --- | ---
+            familyName | The application family | ?sort=familyName:asc
+            isLicenseRequired | Is a license required | ?sort=isLicenseRequired:desc
+            name | The name of the application | ?sort=name:asc
+          required: false
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ContainerApplications'
+              }
+            }
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/vendors:
+    get:
+      summary: Get vendors
+      description: Returns a collection of vendors.
+      operationId: "getVendors"
+      tags:
+        - Vendors
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: filter
+          in: query
+          description: |
+            Filter the collection of vendors. Format of the query string parameter:
+
+            ```
+            ?filter=<filter name> <operator> <value>
+            ```
+
+            Filter name | Description | Data type | Example
+            :--- | --- | --- | ---
+            name | The name of the vendor | String | ?filter=name -eq "Oracle"
+
+            For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+          required: false
+          schema: {
+            "type" : "string"
+          }
+        - name: sort
+          in: query
+          description: |
+            Sort the collection of vendors. Format of the query string parameter:
+
+            ```
+            ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+            ```
+
+            Field name | Description | Example
+            :--- | --- | ---
+            name | The name of the vendor | ?sort=name:asc
+          required: false
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/Vendors'
+              }
+            }
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/vendors/{id}:
+    get:
+      summary: Get vendor
+      description: Returns the details of a given vendor.
+      operationId: "getVendorById"
+      tags:
+        - Vendors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the vendor for which details will be returned.
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/VendorDetails'
+              }
+            }
+          }
+        }
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/sam/containers/v1/vendors/{id}/applications:
+    get:
+      summary: Get vendor applications
+      description: Returns a collection of applications for a given vendor.
+      operationId: "getVendorApplications"
+      tags:
+        - Vendors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the vendor for which a collection of applications for that vendor will be returned.
+          schema: {
+            "type" : "string"
+          }
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - name: filter
+          in: query
+          description: |
+            Filter the collection of vendor applications. Format of the query string parameter:
+
+            ```
+            ?filter=<filter name> <operator> <value>
+            ```
+
+            Filter name | Description | Data type | Example
+            :--- | --- | --- | ---
+            edition | The edition of the application | String | ?filter=edition -eq "Enterprise"
+            isLicenseRequired | Is a license required | String | ?filter=isLicenseRequired -eq true
+            familyName | The application family | String | ?filter=familyName -eq "Oracle Database"
+            name | The name of the application | String | ?filter=name -eq "Oracle Database Enterprise Edition 12c"
+            version | The version of the application | String | ?filter=version -eq "12c"
+
+            For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+          required: false
+          schema: {
+            "type" : "string"
+          }
+        - name: sort
+          in: query
+          description: |
+            Sort the collection of vendor applications. Format of the query string parameter:
+
+            ```
+            ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+            ```
+
+            Field name | Description | Example
+            :--- | --- | ---
+            familyName | The application family | ?sort=familyName:asc
+            isLicenseRequired | Is a license required | ?sort=isLicenseRequired:desc
+            name | The name of the application | ?sort=name:asc
+          required: false
+          schema: {
+            "type" : "string"
+          }
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/VendorApplications'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+components:
+
+  parameters:
+
+    PageSize:
+      name: page_size
+      in: query
+      required: false
+      description: The number of results returned per page.
+      schema: {
+        "type" : "integer",
+        "default": 100
+      }
+
+    PageNumber:
+      name: page_number
+      in: query
+      required: false
+      description: The starting page in the result set.
+      schema: {
+        "type" : "integer",
+        "format" : "int64",
+        "default": 1
+      }
+
+    From:
+      name: from
+      in: query
+      required: false
+      description: The start of the time range.
+      schema: {
+        "type" : "string",
+        "format": "date-time"
+      }
+
+    To:
+      name: to
+      in: query
+      required: false
+      description: The end of the time range.
+      schema: {
+        "type" : "string",
+        "format": "date-time"
+      }
+
+    ContainersFilter:
+      name: filter
+      in: query
+      description: |
+        Filter the collection of containers. Format of the query string parameter:
+
+        ```
+        ?filter=<filter name> <operator> <value>
+        ```
+
+        Filter name | Description | Data type | Example
+        :--- | --- | --- | ---
+        clientId | The client ID specified in the cluster the container belongs to | String | ?filter=clientId -eq "20129b99-d6f6-4675-7f6e-08d9ab3864d1"
+        clientName | The client name specified in the cluster the container belongs to | String | ?filter=clientName -contains "prod"
+        cpuLimit | The container CPU limit | Number | ?filter=cpuLimit -gt 2000
+        endTime | The time the container stopped | Date | ?filter=(endTime -gt "2021-04-01") -and (endTime -lt "2021-06-30")
+        imageId | The ID of the image used by the container | String | ?filter=imageId -eq "sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d"
+        imageName | The name of the image used by the container | String | ?filter=imageName -eq "oracle:12.1.0"
+        name | The name of the container | String | ?filter=name -eq "db"
+        namespace | The namespace of the container | String | ?filter=namespace -eq "prod"
+        nodeId | The ID of the node the container belongs to | String | ?filter=nodeId -eq "72151921-99f0-4f83-bff5-a5017ca10171"
+        nodeName | The name of the node the container belongs to | String | ?filter=nodeName -eq "aks-agentpool-15631278-vmss000001"
+        podId | The ID of the pod the container belongs to | String | ?filter=podId -eq "e9c2a3fe-26a3-475b-8aa5-66d2d42bc8ee"
+        podName | The name of the pod the container belongs to | String | ?filter=podName -eq "oracle_db"
+        repository | The repository where the image is retrieved from | String | ?filter=repository -eq "prod.registry.snow.com"
+        startTime | The time the container started | Date | ?filter=(startTime -gt "2021-01-01") -and (startTime -lt "2021-03-31")
+
+        For more information on the available operators and which data types those operators work on, see [Filter API call results](https://docs.snowsoftware.com/snow-atlas/en/UUID-9431611e-6fee-9ad8-6b77-775c9fffb0b7.html).
+      required: false
+      schema: {
+        "type" : "string"
+      }
+
+    ContainersSort:
+      name: sort
+      in: query
+      description: |
+        Sort the collection of containers. Format of the query string parameter:
+
+        ```
+        ?sort=<field name 1>:<asc|desc>,<field name 2>:<asc|desc>
+        ```
+
+        Field name | Description | Example
+        :--- | --- | ---
+        clientId | The client ID specified in the cluster the container belongs to |  ?sort=clientId:asc
+        clientName | The client name specified in the cluster the container belongs to | ?sort=clientName:desc
+        cpuLimit | The container CPU limit | ?sort=cpuLimit:asc
+        name | The name of the container | ?sort=name:asc
+      required: false
+      schema: {
+        "type" : "string"
+      }
+
+  schemas:
+
+    Pagination:
+      type: object
+      required:
+        - page_size
+        - page_number
+      properties:
+        page_size:
+          type: integer
+          description: The requested page size.
+          example: 100
+        page_number:
+          type: integer
+          format: int64
+          description: The current page number.
+          example: 1
+        total_pages:
+          type: integer
+          format: int64
+          description: The total number of pages.
+          example: 1
+        total_items:
+          type: integer
+          format: int64
+          description: The total number of items.
+          example: 1
+
+    ApplicationFamilyDetails:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          description: The unique ID of the application family.
+          type: string
+          example: e5f53402-a698-40d3-b502-5b70b2dda5b2
+        name:
+          description: The name of the application family.
+          type: string
+          example: Oracle Database
+
+    ApplicationFamilyContainers:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationFamilyContainerSummary'
+
+    ApplicationFamilyContainerSummary:
+      allOf: 
+        - $ref: "#/components/schemas/ContainerSummary"
+        - $ref: "#/components/schemas/ApplicationEmbedded"
+
+    Applications:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationSummary'
+
+    ApplicationSummary:
+      type: object
+      required:
+      - id
+      - name
+      - vendorId
+      - vendorName
+      - version
+      - quantityOfContainers
+      properties:
+        id:
+          description: The unique ID of the application.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        name:
+          description: The name of the application.
+          type: string
+          example: Oracle Database 21c
+        familyId:
+          description: The unique ID of the application family.
+          type: string
+          example: e5f53402-a698-40d3-b502-5b70b2dda5b2
+        familyName:
+          description: The name of the application family.
+          type: string
+          example: Oracle Database
+        vendorId:
+          description: The unique ID of the application vendor.
+          type: string
+          example: 9f47d82a-ab6f-43f7-8ddd-11bd1301eb08
+        vendorName:
+          description: The name of the application vendor.
+          type: string
+          example: Oracle
+        edition:
+          description: The edition of the application.
+          type: string
+          example: Enterprise Edition
+        version:
+          description: The version of the application.
+          type: string
+          example: "21.3"
+        isLicenseRequired:
+          description: Is a license required for this application.
+          type: boolean
+          example: true
+        quantityOfContainers:
+          description: The number of containers running this application.
+          type: integer
+          format: int64
+          example: 100
+
+    ApplicationDetails:
+      type: object
+      required:
+      - id
+      - name
+      - vendorId
+      - vendorName
+      - version
+      - edition
+      - applicationType
+      - releaseDate
+      properties:
+        id:
+          description: The unique ID of the application.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        name:
+          description: The name of the application.
+          type: string
+          example: Oracle Database 21c
+        familyId:
+          description: The unique ID of the application family.
+          type: string
+          example: e5f53402-a698-40d3-b502-5b70b2dda5b2
+        familyName:
+          description: The name of the application family.
+          type: string
+          example: Oracle Database
+        vendorId:
+          description: The vendor id of the application.
+          type: string
+          example: 9f47d82a-ab6f-43f7-8ddd-11bd1301eb08
+        vendorName:
+          description: The vendor name of the application.
+          type: string
+          example: Oracle
+        version:
+          description: The version of the application.
+          type: string
+          example: "21.3"
+        edition:
+          description: The edition of the application.
+          type: string
+          example: Enterprise Edition
+        applicationType:
+          description: The type of application.
+          type: string
+          example: ""
+        releaseDate:
+          description: The date which the application was released.
+          type: string
+          format: date-time
+        isLicenseRequired:
+          description: Is a license required for this application.
+          type: boolean
+          example: true
+
+    ApplicationEmbedded:
+      type: object
+      required: 
+        - applicationId
+        - applicationName
+      properties: 
+        applicationId:
+          description: The unique ID of the application.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        applicationName:
+          description: The name of the application.
+          type: string
+          example: Oracle Database 21c
+        applicationVersion:
+          description: The version of the application.
+          type: string
+          example: "21.3"
+        applicationEdition:
+          description: The edition of the application.
+          type: string
+          example: Enterprise Edition
+
+    Containers:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerSummary'
+
+    ContainerSummary:
+      allOf:
+        - $ref: "#/components/schemas/NodeSummaryInfo"
+        - $ref: "#/components/schemas/PodSummaryInfo"
+        - $ref: "#/components/schemas/ContainerSummaryInfo"
+
+    NodeSummaryInfo:
+      type: object
+      required:
+      - clientId
+      - clientName
+      - nodeId
+      - nodeName
+      properties:
+        clientId:
+          type: string
+          example: 59aff58f-fc35-480a-aea1-7e02ec893933
+        clientName:
+          type: string
+          example: production
+        nodeId:
+          type: string
+          example: 21440793-6fde-4376-9ed5-9fbb5a78189b
+        nodeName:
+          type: string
+          example: aks-agentpool-15631278-vmss000001
+        nodeCpu:
+          type: integer
+          format: int32
+          example: 8
+
+    PodSummaryInfo:
+      type: object
+      required:
+      - podId
+      - podName
+      properties:
+        podId:
+          type: string
+          example: 296d8142-adb7-4624-96f6-2025933e5d94
+        podName:
+          type: string
+          example: oracle_db
+
+    ContainerSummaryInfo:
+      type: object
+      required:
+      - id
+      - name
+      - namespace
+      - imageId
+      - imageName
+      - startTime
+      properties:
+        id:
+          type: string
+          example: 09f38980-b9a6-46e0-894b-8dd29f35efba
+        name:
+          type: string
+          example: db
+        namespace:
+          type: string
+          example: default
+        imageId:
+          type: string
+          example: sha256:f7988fb6c02e0ce69257d9bd9cf37ae20a60f1df7563c3a2a6abe24160306b8d
+        imageName:
+          type: string
+          example: oracle:12.1.0
+        repository:
+          type: string
+          example: prod.registry.snow.com
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        cpuLimit:
+          type: integer
+          format: int32
+          nullable: true
+          example: 2000
+        currentState:
+          type: string
+          enum:
+            - Waiting
+            - Running
+            - Terminated
+            - Disconnected
+          example: Running
+
+    ContainerDetails:
+      allOf:
+        - $ref: "#/components/schemas/NodeSummaryInfo"
+        - $ref: "#/components/schemas/NodeAdditionalInfo"
+        - $ref: "#/components/schemas/PodSummaryInfo"
+        - $ref: "#/components/schemas/PodAdditionalInfo"
+        - $ref: "#/components/schemas/ContainerSummaryInfo"
+        - $ref: "#/components/schemas/ContainerAdditionalInfo"
+
+    NodeAdditionalInfo:
+      type: object
+      required:
+        - nodeCpu
+        - nodeMemory
+      properties:
+        cloudType:
+          type: string
+          nullable: true
+          example: null
+        nodeType:
+          type: string
+          nullable: true
+          example: null
+        nodeCpu:
+          type: integer
+          format: int32
+          example: 8
+        nodeMemory:
+          $ref: '#/components/schemas/DataSizeValue'
+
+    PodAdditionalInfo:
+      type: object
+      required:
+        - podState
+      properties:
+        podState:
+          description: The state of the pod.
+          type: string
+          enum:
+            - Pending
+            - Running
+            - Succeeded
+            - Failed
+            - Unknown
+          example: Running
+
+    ContainerAdditionalInfo:
+      type: object
+      required:
+        - state
+      properties:
+        state:
+          type: string
+          enum:
+            - Waiting
+            - Running
+            - Terminated
+            - Disconnected
+          example: Running
+        stateReason:
+          type: string
+          nullable: true
+          example: null
+        stateMessage:
+          type: string
+          nullable: true
+          example: null
+        restartCount:
+          type: integer
+          format: int32
+        cpuLimit:
+          type: integer
+          format: int32
+          nullable: true
+          example: 2000
+        memoryLimit:
+          $ref: '#/components/schemas/DataSizeValue'
+        ownerId:
+          type: string
+          nullable: true
+          example: null
+        ownerName:
+          type: string
+          nullable: true
+          example: null
+        ownerKind:
+          type: string
+          nullable: true
+          example: null
+
+    DataSizeValue:
+        type: object
+        description: Provides a common construct for data size values (for example memory and storage capacity).
+        required:
+          - value
+          - unit
+        properties:
+          value:
+            description: The data size value.
+            type: integer
+            format: int64
+            example: 2
+          unit:
+            description: The data size unit.
+            type: string
+            enum: [KB,MB,GB,TB,PB,EB]
+            example: GB
+
+    ContainerApplications:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContainerApplicationSummary'
+
+    ContainerApplicationSummary:
+      type: object
+      required:
+      - id
+      - name
+      - version
+      - vendorId
+      - vendorName
+      properties:
+        id:
+          description: The unique ID of the application.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        name:
+          description: The name of the application.
+          type: string
+          example: Oracle Database 21c
+        familyId:
+          description: The unique ID of the application family.
+          type: string
+          example: e5f53402-a698-40d3-b502-5b70b2dda5b2
+        familyName:
+          description: The name of the application family.
+          type: string
+          example: Oracle Database
+        vendorId:
+          description: The unique ID of the application vendor.
+          type: string
+          example: 9f47d82a-ab6f-43f7-8ddd-11bd1301eb08
+        vendorName:
+          description: The name of the application vendor.
+          type: string
+          example: Oracle
+        edition:
+          description: The edition of the application.
+          type: string
+          example: Enterprise Edition
+        version:
+          description: The version of the application.
+          type: string
+          example: "21.3"
+        isLicenseRequired:
+          description: Is a license required for this application.
+          type: boolean
+          example: true
+
+    Vendors:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorSummary'
+
+    VendorSummary:
+      type: object
+      required:
+      - id
+      - name
+      - quantityOfContainers
+      properties:
+        id:
+          description: The unique ID of the vendor.
+          type: string
+          example: 6745c79b-86a1-4862-9d56-2424b230afcf
+        name:
+          description: The name of the vendor.
+          type: string
+          example: Oracle
+        quantityOfContainers:
+          description: The number of containers running applications from this vendor.
+          type: integer
+          format: int64
+          example: 100
+
+    VendorDetails:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          description: The unique ID of the vendor.
+          type: string
+          example: 964f4888-fe37-453c-81f3-cf9421cbc6e2
+        name:
+          description: The name of the vendor.
+          type: string
+          example: Oracle
+
+    VendorApplications:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/VendorApplicationSummary'
+
+    VendorApplicationSummary:
+      type: object
+      required:
+      - id
+      - name
+      - version
+      - quantityOfContainers
+      properties:
+        id:
+          description: The unique ID of the application.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        name:
+          description: The name of the application.
+          type: string
+          example: Oracle Database 21c
+        familyId:
+          description: The unique ID of the application family.
+          type: string
+          example: e5f53402-a698-40d3-b502-5b70b2dda5b2
+        familyName:
+          description: The name of the application family.
+          type: string
+          example: Oracle Database
+        edition:
+          description: The edition of the application.
+          type: string
+          example: Enterprise Edition
+        version:
+          description: The version of the application.
+          type: string
+          example: "21.3"
+        isLicenseRequired:
+          description: Is a license required for this application.
+          type: boolean
+          example: true
+        quantityOfContainers:
+          description: The number of containers running this application.
+          type: integer
+          format: int64
+          example: 100
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref:  "#/components/schemas/Error"
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The HTTP status code.
+        message:
+          type: string
+          description: The error message.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+
+    "400":
+      description: Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: 
+             code: 400
+             message: Filter field name needs to be formatted as a string.
+
+    "404":
+      description: Not Found - The operation you requested failed because a resource associated with your request could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: 404
+              message: Resource with ID '32aeda0a-80dc-475a-907f-2d250a3a8614' not found.
+
+    "500":
+      description: Internal Server Error - Your request failed due to an internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: 500
+              message: The service encountered an unexpected condition that prevented it from fulfilling the request.

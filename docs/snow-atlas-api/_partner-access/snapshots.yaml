@@ -1,0 +1,352 @@
+openapi: 3.0.3
+
+info:
+  version: v1
+  title: Partner Estate Aggregator
+  description: API for exploring snapshots of metrics which have been aggregated for the use of Snow's partners.
+  contact:
+    name: Snow Software, Inc.
+    url: https://www.snowsoftware.com
+
+servers:
+  - url: https://australiasoutheast.snowsoftware.io
+  - url: https://eastus2.snowsoftware.io
+  - url: https://westeurope.snowsoftware.io
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Computer Snapshots
+
+paths:
+
+  /api/partner-estate/aggregator/v1/snapshots/computer:
+    get:
+      summary: Get your computer snapshots
+      description: Returns a collection of snapshots of your own computer metrics. To see only the most recent snapshot, set the boolean parameter "latest" to "true".
+      operationId: "getComputerSnaphots"
+      tags:
+        - Computer Snapshots
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Latest'
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ComputerSnapshotsResponse'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/partner-estate/aggregator/v1/snapshots/customers/computer:
+    get:
+      summary: Get your customers' computer snapshots
+      description: |
+            Returns a collection of snapshots of your customers' computer metrics. Data will only be returned for customers that have set up your external access to their Snow Atlas system.
+            
+            To see only the most recent snapshot for each customer, set the boolean parameter "latest" to "true".
+      operationId: "getCustomersComputerSnaphots"
+      tags:
+        - Computer Snapshots
+      parameters:
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Latest'
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ComputerSnapshotsResponse'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /api/partner-estate/aggregator/v1/snapshots/customers/{id}/computer:
+    get:
+      summary: Get one customer's computer snapshots
+      description: |
+            Returns a collection of snapshots of a given customer's computer metrics. Data is only returned if the customer has set up external access to their Snow Atlas system for you.
+            
+            To see only the most recent snapshot for this customer, set the boolean parameter "latest" to "true".
+      operationId: "getComputerSnaphotsByCustomerId"
+      tags:
+        - Computer Snapshots
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The customer ID. 
+          schema:
+            type: string
+
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/From'
+        - $ref: '#/components/parameters/To'
+        - $ref: '#/components/parameters/Latest'
+      responses:
+        '200': {
+          "description" : "OK - Your request succeeded.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                $ref: '#/components/schemas/ComputerSnapshotsResponse'
+              }
+            }
+
+          }
+        }
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'       
+
+components:
+  parameters:
+    PageSize:
+      name: page_size
+      in: query
+      required: false
+      description: The number of results returned per page.
+      schema: {
+        "type" : "integer",
+        "default": 100
+      }
+
+    PageNumber:
+      name: page_number
+      in: query
+      required: false
+      description: The starting page in the result set.
+      schema: {
+        "type" : "integer",
+        "format" : "int64",
+        "default": 1
+      }
+    
+    From:
+      name: from
+      in: query
+      required: false
+      description: The start of the time range.
+      schema: {
+        "type" : "string",
+        "format": "date-time"
+      }
+
+    To:
+      name: to
+      in: query
+      required: false
+      description: The end of the time range.
+      schema: {
+        "type" : "string",
+        "format": "date-time"
+      }
+    
+    Latest:
+      name: latest
+      in: query
+      required: false
+      description: The latest metrics snapshot.
+      schema: {
+        "type" : "boolean"
+      }
+
+  schemas:
+    Pagination:
+      type: object
+      required:
+        - page_size
+        - page_number
+      properties:
+        page_size:
+          type: integer
+          description: The requested page size.
+          example: 100
+        page_number:
+          type: integer
+          format: int64
+          description: The current page number.
+          example: 1
+        total_pages:
+          type: integer
+          format: int64
+          description: The total number of pages.
+          example: 1
+        total_items:
+          type: integer
+          format: int64
+          description: The total number of items.
+          example: 1
+
+    ComputerSnapshotsResponse:
+        type: object
+        properties:
+          pagination:
+            $ref: '#/components/schemas/Pagination'
+            x-order: 0
+          items:
+            type: array
+            x-order: 1
+            items:
+              $ref: '#/components/schemas/ComputerSnapshotItem'
+
+    ComputerSnapshotItem: 
+      $ref: '#/components/schemas/ComputerDetail'
+    
+    CommonTypeDetail:
+      type: object
+      properties:
+        tenantId:
+          description: The tenant ID.
+          type: string
+          example: b814cda1-2c2a-455c-b288-57b642982eb0
+        timestamp:
+          description: The timestamp of the metrics snapshot.
+          type: string
+          example: 2023-02-28T00:00:00Z    
+
+    ComputerDetail:
+      allOf:
+        - $ref: '#/components/schemas/CommonTypeDetail'
+      type: object
+      properties: 
+        totalCount:
+          type: integer
+          format: int32
+          example: 1000
+        inventoried:
+          type: integer
+          format: int32
+          example: 250
+        deviceType:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceTypeInfo'
+        osType:
+          type: array
+          items:
+            $ref: '#/components/schemas/OSTypeInfo'
+
+    DeviceTypeInfo:
+      type: object
+      properties:
+        deviceType:
+          type: string
+          example: Desktop
+        count:
+          type: integer
+          format: int32
+          example: 100
+    
+    OSTypeInfo:
+      type: object
+      properties:
+        osType:
+          type: string
+          example: Windows 10
+        count:
+          type: integer
+          format: int32
+          example: 100
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          $ref:  '#/components/schemas/Error'
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: The HTTP status code.
+        message:
+          type: string
+          description: The error message.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+
+    "400":
+      description: Bad Request - Your request is invalid or improperly formed. Consequently, the API server could not understand your request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: 
+             code: 400
+             message: The filter field name must be formatted as a string.
+    "403":
+      description: |
+            Forbidden - The operation you requested is forbidden and cannot be completed. 
+            This could be because you don't have the required permissions to use the requested endpoint, or the requested endpoint requires purchasing additional features. The recommended action is to abort.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error: 
+             code: 403
+             message: You are not authorized to perform the requested operation.
+    "404":
+      description: Not Found - The operation you requested failed because a resource associated with your request could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: 404
+              message: The resource with ID '32aeda0a-80dc-475a-907f-2d250a3a8614' was not found.
+
+    "500":
+      description: Internal Server Error - Your request failed due to an internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            error:
+              code: 500
+              message: The service encountered an unexpected condition that prevented it from fulfilling the request.

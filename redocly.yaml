@@ -1,0 +1,19 @@
+organization: snowsoftware
+apis:
+  main@v1:
+    root: ./openapi/openapi.yaml
+resolve: 
+  doNotResolveExamples: true 
+theme:
+  openapi: 
+    #Hide Download buttun True:False
+    hideDownloadButton: false
+    hideLoading: false
+    schemaExpansionLevel: 2
+    generateCodeSamples:
+      languages:
+        - lang: curl
+        - lang: Python
+        - lang: Go
+        - lang: JavaScript
+      
