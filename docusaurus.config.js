@@ -57,14 +57,15 @@ const config = {
           {
             id: 'sam_api_computers',
             //spec: 'docs/snow-atlas-api/sam/computers.json',
-            spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
+            //spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
+            spec: 'docs/snow-atlas-api/sam-core-apis/computers-spec-beta.json',
             route: 'docs/snow-atlas-api/sam/computers',
           },
           {
             id: 'sam_api_customfields',
             //spec: 'docs/snow-atlas-api/sam/agreements.json',
             spec: 'https://westeurope.snowsoftware.io/api/customfields/meta/http',
-            route: 'docs/snow-atlas-api/sam/agreements',
+            route: 'docs/snow-atlas-api/sam/customfields',
           },  
         ],
         // Theme Options for modifying how redoc renders them
