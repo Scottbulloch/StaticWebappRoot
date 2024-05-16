@@ -3,7 +3,7 @@ custom_edit_url: null
 sidebar_position: 1
 ---
 
-# Snow Atlas API resources
+# Snow Atlas Beta API resources
 
 Snow Atlas is a cloud-native technology intelligence platform providing Snow products as SaaS solutions.
 

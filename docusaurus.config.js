@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Snow Docs',
+  title: 'Snow Beta Docs',
   tagline: 'Documentation to help you configure and use Snow Software products',
   url: 'https://docs-app.dev-snowsoftware.io/',
   baseUrl: '/',
