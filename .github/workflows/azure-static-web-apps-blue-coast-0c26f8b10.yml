@@ -22,11 +22,10 @@ jobs:
       - name: Run Permissions Fix for Error
             # This step is needed to fix error code 243 when the cash permissions are incorrect and the build fails.
         run: |
-              cd / 
               echo 'print current directory'
               pwd
               ls -lah
-              sudo chown  -R  1001:127 ".github/home.npm"      
+              sudo chown -R 1001:127 .github/*"      
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
