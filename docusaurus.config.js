@@ -62,6 +62,13 @@ const config = {
             route: 'docs/snow-atlas-api/sam/computers',
           },
           {
+            id: 'sam_api_licenses',
+            //spec: 'docs/snow-atlas-api/sam/computers.json',
+            //spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
+            spec: 'https://westeurope.qa-snowsoftware.io/api/licenses/meta/http',
+            route: 'docs/snow-atlas-api/sam/licenses',
+          },
+          {
             id: 'sam_api_useraccounts',
             //spec: 'docs/snow-atlas-api/sam/computers.json',
             //spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
