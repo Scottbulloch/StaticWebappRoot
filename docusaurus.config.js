@@ -71,8 +71,15 @@ const config = {
             id: 'sam_api_useraccounts',
             //spec: 'docs/snow-atlas-api/sam/computers.json',
             //spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
-            spec: 'docs/snow-atlas-api/sam-core-apis/users-spec-beta.yaml',
+            spec: 'docs/snow-atlas-api/sam-core-apis/sam_users.yaml',
             route: 'docs/snow-atlas-api/sam/users',
+          },
+          {
+            id: 'sam_api_useraccounts_views',
+            //spec: 'docs/snow-atlas-api/sam/computers.json',
+            //spec: 'https://westeurope.snowsoftware.io/api/computers/meta/http',
+            spec: 'docs/snow-atlas-api/sam-core-apis/sam_users_view.yaml',
+            route: 'docs/snow-atlas-api/sam/users_view',
           },
           {
             id: 'sam_api_customfields',
