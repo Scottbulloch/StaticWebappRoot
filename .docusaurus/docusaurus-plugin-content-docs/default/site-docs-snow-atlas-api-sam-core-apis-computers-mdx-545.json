@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/sam-core-apis/computers",
+  "id": "snow-atlas-api/sam-core-apis/computers",
+  "title": "Computers - Beta",
+  "description": "",
+  "source": "@site/docs/snow-atlas-api/sam-core-apis/computers.mdx",
+  "sourceDirName": "snow-atlas-api/sam-core-apis",
+  "slug": "/snow-atlas-api/sam-core-apis/computers",
+  "permalink": "/snow-atlas-api/sam-core-apis/computers",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "title": "Computers - Beta",
+    "hide_table_of_contents": true,
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "SAM Core APIs",
+    "permalink": "/snow-atlas-api/sam-core-apis/"
+  },
+  "next": {
+    "title": "Custom Fields - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/custom-fields"
+  }
+}

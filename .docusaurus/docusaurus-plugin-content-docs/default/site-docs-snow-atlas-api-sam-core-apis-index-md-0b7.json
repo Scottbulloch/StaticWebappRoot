@@ -1,0 +1,26 @@
+{
+  "unversionedId": "snow-atlas-api/sam-core-apis/index",
+  "id": "snow-atlas-api/sam-core-apis/index",
+  "title": "SAM Core APIs",
+  "description": "SAM Core on Snow Atlas enables you to manage and control your organization's software assets and licenses to optimize their use.",
+  "source": "@site/docs/snow-atlas-api/sam-core-apis/index.md",
+  "sourceDirName": "snow-atlas-api/sam-core-apis",
+  "slug": "/snow-atlas-api/sam-core-apis/",
+  "permalink": "/snow-atlas-api/sam-core-apis/",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {
+    "custom_edit_url": null
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Example scripts",
+    "permalink": "/snow-atlas-api/example-scripts"
+  },
+  "next": {
+    "title": "Computers - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/computers"
+  }
+}

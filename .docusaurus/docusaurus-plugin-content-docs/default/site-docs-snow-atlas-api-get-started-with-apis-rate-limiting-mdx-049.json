@@ -1,0 +1,26 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/rate-limiting",
+  "id": "snow-atlas-api/get-started-with-apis/rate-limiting",
+  "title": "Rate limiting",
+  "description": "Policy based rate limiting is used to throttle the number of requests against Snow Atlas APIs. Rate limiting policies are primarily based on IP addresses, clients and users, and any combinations of those.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/rate-limiting.mdx",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis",
+  "slug": "/snow-atlas-api/get-started-with-apis/rate-limiting",
+  "permalink": "/snow-atlas-api/get-started-with-apis/rate-limiting",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 4,
+  "frontMatter": {
+    "sidebar_position": 4
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Work with OpenAPI endpoint definition files",
+    "permalink": "/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files"
+  },
+  "next": {
+    "title": "Example scripts",
+    "permalink": "/snow-atlas-api/example-scripts"
+  }
+}

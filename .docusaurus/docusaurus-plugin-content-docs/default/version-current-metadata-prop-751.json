@@ -1,0 +1,208 @@
+{
+  "pluginId": "default",
+  "version": "current",
+  "label": "Next",
+  "banner": null,
+  "badge": false,
+  "noIndex": false,
+  "className": "docs-version-current",
+  "isLast": true,
+  "docsSidebars": {
+    "tutorialSidebar": [
+      {
+        "type": "category",
+        "label": "Snow Atlas Beta API resources",
+        "collapsible": true,
+        "collapsed": true,
+        "items": [
+          {
+            "type": "category",
+            "label": "Get started with APIs",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "link",
+                "label": "API conventions",
+                "href": "/snow-atlas-api/get-started-with-apis/api-conventions",
+                "docId": "snow-atlas-api/get-started-with-apis/api-conventions"
+              },
+              {
+                "type": "category",
+                "label": "API authentication",
+                "collapsible": true,
+                "collapsed": true,
+                "items": [
+                  {
+                    "type": "link",
+                    "label": "Authentication with client credentials",
+                    "href": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials",
+                    "docId": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials"
+                  },
+                  {
+                    "type": "link",
+                    "label": "Authentication using Postman",
+                    "href": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+                    "docId": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman"
+                  }
+                ],
+                "href": "/snow-atlas-api/get-started-with-apis/api-authentication/"
+              },
+              {
+                "type": "link",
+                "label": "Work with OpenAPI endpoint definition files",
+                "href": "/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+                "docId": "snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files"
+              },
+              {
+                "type": "link",
+                "label": "Rate limiting",
+                "href": "/snow-atlas-api/get-started-with-apis/rate-limiting",
+                "docId": "snow-atlas-api/get-started-with-apis/rate-limiting"
+              }
+            ],
+            "href": "/snow-atlas-api/get-started-with-apis/"
+          },
+          {
+            "type": "link",
+            "label": "Example scripts",
+            "href": "/snow-atlas-api/example-scripts",
+            "docId": "snow-atlas-api/example-scripts"
+          },
+          {
+            "type": "category",
+            "label": "SAM Core APIs",
+            "collapsible": true,
+            "collapsed": true,
+            "items": [
+              {
+                "type": "link",
+                "label": "Computers - Beta",
+                "href": "/snow-atlas-api/sam-core-apis/computers",
+                "docId": "snow-atlas-api/sam-core-apis/computers"
+              },
+              {
+                "type": "link",
+                "label": "Custom Fields - Beta",
+                "href": "/snow-atlas-api/sam-core-apis/custom-fields",
+                "docId": "snow-atlas-api/sam-core-apis/custom-fields"
+              },
+              {
+                "type": "link",
+                "label": "Users - Beta",
+                "href": "/snow-atlas-api/sam-core-apis/user-accounts",
+                "docId": "snow-atlas-api/sam-core-apis/user-accounts"
+              },
+              {
+                "type": "link",
+                "label": "Users Views - Beta",
+                "href": "/snow-atlas-api/sam-core-apis/user-accounts-views",
+                "docId": "snow-atlas-api/sam-core-apis/user-accounts-views"
+              },
+              {
+                "type": "link",
+                "label": "Licenses - Beta",
+                "href": "/snow-atlas-api/sam-core-apis/licenses",
+                "docId": "snow-atlas-api/sam-core-apis/licenses"
+              }
+            ],
+            "href": "/snow-atlas-api/sam-core-apis/"
+          }
+        ],
+        "href": "/snow-atlas-api/"
+      }
+    ]
+  },
+  "docs": {
+    "snow-atlas-api/example-scripts": {
+      "id": "snow-atlas-api/example-scripts",
+      "title": "Example scripts",
+      "description": "Here you can find an example script to authenticate and an example script to export a list of computers using Snow Atlas APIs.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman": {
+      "id": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+      "title": "Authentication using Postman",
+      "description": "Snow Atlas supports authentication with OAuth2 directly in Postman to get an access token to use with Snow Atlas APIs.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials": {
+      "id": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials",
+      "title": "Authentication with client credentials",
+      "description": "You can register an unattended application to create client credentials that you use to obtain a token to access Snow Atlas APIs. This allows you to access the data from Snow Atlas APIs for reporting and visualization using third-party tools or scripts.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/api-authentication/index": {
+      "id": "snow-atlas-api/get-started-with-apis/api-authentication/index",
+      "title": "API authentication",
+      "description": "Snow Atlas authentication is governed by the Snow Atlas Identity Provider (IDP). Snow Atlas APIs are protected by access tokens issued by the IDP.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/api-conventions": {
+      "id": "snow-atlas-api/get-started-with-apis/api-conventions",
+      "title": "API conventions",
+      "description": "There are certain conventions that apply to all Snow Atlas APIs. The following sections describe the conventions and provide some examples.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/index": {
+      "id": "snow-atlas-api/get-started-with-apis/index",
+      "title": "Get started with APIs",
+      "description": "This guide is intended to provide a basic overview of how the Snow Atlas APIs operate and how you can use them in your environment.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/rate-limiting": {
+      "id": "snow-atlas-api/get-started-with-apis/rate-limiting",
+      "title": "Rate limiting",
+      "description": "Policy based rate limiting is used to throttle the number of requests against Snow Atlas APIs. Rate limiting policies are primarily based on IP addresses, clients and users, and any combinations of those.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files": {
+      "id": "snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+      "title": "Work with OpenAPI endpoint definition files",
+      "description": "OpenAPI is a standard method of defining REST endpoints. You can import the OpenAPI into your favorite REST tool to explore the endpoints and execute calls. Postman is one of several possible REST tools that can be used for this purpose.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/index": {
+      "id": "snow-atlas-api/index",
+      "title": "Snow Atlas Beta API resources",
+      "description": "Snow Atlas is a cloud-native technology intelligence platform providing Snow products as SaaS solutions.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/computers": {
+      "id": "snow-atlas-api/sam-core-apis/computers",
+      "title": "Computers - Beta",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/custom-fields": {
+      "id": "snow-atlas-api/sam-core-apis/custom-fields",
+      "title": "Custom Fields - Beta",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/index": {
+      "id": "snow-atlas-api/sam-core-apis/index",
+      "title": "SAM Core APIs",
+      "description": "SAM Core on Snow Atlas enables you to manage and control your organization's software assets and licenses to optimize their use.",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/licenses": {
+      "id": "snow-atlas-api/sam-core-apis/licenses",
+      "title": "Licenses - Beta",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/user-accounts": {
+      "id": "snow-atlas-api/sam-core-apis/user-accounts",
+      "title": "Users - Beta",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    },
+    "snow-atlas-api/sam-core-apis/user-accounts-views": {
+      "id": "snow-atlas-api/sam-core-apis/user-accounts-views",
+      "title": "Users Views - Beta",
+      "description": "",
+      "sidebar": "tutorialSidebar"
+    }
+  }
+}

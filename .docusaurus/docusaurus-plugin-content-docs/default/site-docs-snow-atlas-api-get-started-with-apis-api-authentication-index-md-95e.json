@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/api-authentication/index",
+  "id": "snow-atlas-api/get-started-with-apis/api-authentication/index",
+  "title": "API authentication",
+  "description": "Snow Atlas authentication is governed by the Snow Atlas Identity Provider (IDP). Snow Atlas APIs are protected by access tokens issued by the IDP.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/api-authentication/index.md",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis/api-authentication",
+  "slug": "/snow-atlas-api/get-started-with-apis/api-authentication/",
+  "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "API conventions",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-conventions"
+  },
+  "next": {
+    "title": "Authentication with client credentials",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials"
+  }
+}

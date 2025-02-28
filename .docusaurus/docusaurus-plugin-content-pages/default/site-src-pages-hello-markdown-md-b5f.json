@@ -1,0 +1,10 @@
+{
+  "type": "mdx",
+  "permalink": "/hello-markdown",
+  "source": "@site/src/pages/hello-markdown.md",
+  "title": "Markdown page example",
+  "description": "You don't need React to write simple standalone pages.",
+  "frontMatter": {
+    "title": "Markdown page example"
+  }
+}

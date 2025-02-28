@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/sam-core-apis/custom-fields",
+  "id": "snow-atlas-api/sam-core-apis/custom-fields",
+  "title": "Custom Fields - Beta",
+  "description": "",
+  "source": "@site/docs/snow-atlas-api/sam-core-apis/custom-fields.mdx",
+  "sourceDirName": "snow-atlas-api/sam-core-apis",
+  "slug": "/snow-atlas-api/sam-core-apis/custom-fields",
+  "permalink": "/snow-atlas-api/sam-core-apis/custom-fields",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "title": "Custom Fields - Beta",
+    "hide_table_of_contents": true,
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Computers - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/computers"
+  },
+  "next": {
+    "title": "Users - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/user-accounts"
+  }
+}

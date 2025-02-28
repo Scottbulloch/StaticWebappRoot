@@ -1,0 +1,23 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+  "id": "snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+  "title": "Authentication using Postman",
+  "description": "Snow Atlas supports authentication with OAuth2 directly in Postman to get an access token to use with Snow Atlas APIs.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman.mdx",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis/api-authentication",
+  "slug": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+  "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "frontMatter": {},
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Authentication with client credentials",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-with-client-credentials"
+  },
+  "next": {
+    "title": "Work with OpenAPI endpoint definition files",
+    "permalink": "/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files"
+  }
+}

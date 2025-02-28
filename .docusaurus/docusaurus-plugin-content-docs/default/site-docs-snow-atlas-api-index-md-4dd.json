@@ -1,0 +1,24 @@
+{
+  "unversionedId": "snow-atlas-api/index",
+  "id": "snow-atlas-api/index",
+  "title": "Snow Atlas Beta API resources",
+  "description": "Snow Atlas is a cloud-native technology intelligence platform providing Snow products as SaaS solutions.",
+  "source": "@site/docs/snow-atlas-api/index.md",
+  "sourceDirName": "snow-atlas-api",
+  "slug": "/snow-atlas-api/",
+  "permalink": "/snow-atlas-api/",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "next": {
+    "title": "Get started with APIs",
+    "permalink": "/snow-atlas-api/get-started-with-apis/"
+  }
+}

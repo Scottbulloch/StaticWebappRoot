@@ -1,11 +1,15 @@
-var sanitize = require('./util').sanitize,
-  sanitizeOptions = require('./util').sanitizeOptions,
-  getUrlStringfromUrlObject = require('./util').getUrlStringfromUrlObject,
-  addFormParam = require('./util').addFormParam,
-  form = require('./util').form,
-  shouldAddHttpMethod = require('./util').shouldAddHttpMethod,
-  _ = require('./lodash'),
-  self;
+const {
+    sanitize,
+    sanitizeOptions,
+    getUrlStringfromUrlObject,
+    getNtlmAuthInfo,
+    addFormParam,
+    form,
+    shouldAddHttpMethod
+  } = require('./util'),
+  _ = require('./lodash');
+
+var self;
 
 self = module.exports = {
   convert: function (request, options, callback) {
@@ -16,7 +20,7 @@ self = module.exports = {
     options = sanitizeOptions(options, self.getOptions());
 
     var indent, trim, headersData, body, redirect, timeout, multiLine,
-      format, snippet, silent, url, quoteType;
+      format, snippet, silent, url, quoteType, ntlmAuth;
 
     redirect = options.followRedirect;
     timeout = options.requestTimeoutInSeconds;
@@ -26,9 +30,16 @@ self = module.exports = {
     silent = options.silent;
     quoteType = options.quoteType === 'single' ? '\'' : '"';
     url = getUrlStringfromUrlObject(request.url, quoteType);
+    ntlmAuth = getNtlmAuthInfo(request.auth, quoteType, format);
 
-    snippet = silent ? `curl ${form('-s', format)}` : 'curl';
+    snippet = 'curl';
 
+    if (ntlmAuth) {
+      snippet += ntlmAuth;
+    }
+    if (silent) {
+      snippet += ` ${form('-s', format)}`;
+    }
     if (redirect) {
       snippet += ` ${form('-L', format)}`;
     }
@@ -140,9 +151,20 @@ self = module.exports = {
             let rawBody = body.raw.toString(),
               isAsperandPresent = _.includes(rawBody, '@'),
               // Use the long option if `@` is present in the request body otherwise follow user setting
-              optionName = isAsperandPresent ? '--data-raw' : form('-d', format);
-            // eslint-disable-next-line max-len
-            snippet += indent + `${optionName} ${quoteType}${sanitize(rawBody, trim, quoteType)}${quoteType}`;
+              optionName = isAsperandPresent ? '--data-raw' : form('-d', format),
+              sanitizedBody = sanitize(rawBody, trim, quoteType);
+
+            if (!multiLine) {
+              try {
+                sanitizedBody = JSON.stringify(JSON.parse(sanitizedBody));
+              }
+              catch (e) {
+                // Do nothing
+              }
+            }
+
+            snippet += indent + `${optionName} ${quoteType}${sanitizedBody}${quoteType}`;
+
             break;
           }
 
@@ -190,7 +212,7 @@ self = module.exports = {
             });
             break;
           case 'file':
-            snippet += indent + form('-d', format);
+            snippet += indent + (format ? '--data-binary' : '-d');
             snippet += ` ${quoteType}@${sanitize(body[body.mode].src, trim)}${quoteType}`;
             break;
           default:

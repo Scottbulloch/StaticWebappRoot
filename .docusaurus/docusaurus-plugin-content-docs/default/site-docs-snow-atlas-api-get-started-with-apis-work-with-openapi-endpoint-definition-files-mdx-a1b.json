@@ -1,0 +1,26 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+  "id": "snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+  "title": "Work with OpenAPI endpoint definition files",
+  "description": "OpenAPI is a standard method of defining REST endpoints. You can import the OpenAPI into your favorite REST tool to explore the endpoints and execute calls. Postman is one of several possible REST tools that can be used for this purpose.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files.mdx",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis",
+  "slug": "/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+  "permalink": "/snow-atlas-api/get-started-with-apis/work-with-openapi-endpoint-definition-files",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Authentication using Postman",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/authentication-using-postman"
+  },
+  "next": {
+    "title": "Rate limiting",
+    "permalink": "/snow-atlas-api/get-started-with-apis/rate-limiting"
+  }
+}

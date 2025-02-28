@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/api-conventions",
+  "id": "snow-atlas-api/get-started-with-apis/api-conventions",
+  "title": "API conventions",
+  "description": "There are certain conventions that apply to all Snow Atlas APIs. The following sections describe the conventions and provide some examples.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/api-conventions.md",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis",
+  "slug": "/snow-atlas-api/get-started-with-apis/api-conventions",
+  "permalink": "/snow-atlas-api/get-started-with-apis/api-conventions",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Get started with APIs",
+    "permalink": "/snow-atlas-api/get-started-with-apis/"
+  },
+  "next": {
+    "title": "API authentication",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-authentication/"
+  }
+}

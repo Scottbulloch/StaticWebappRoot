@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/get-started-with-apis/index",
+  "id": "snow-atlas-api/get-started-with-apis/index",
+  "title": "Get started with APIs",
+  "description": "This guide is intended to provide a basic overview of how the Snow Atlas APIs operate and how you can use them in your environment.",
+  "source": "@site/docs/snow-atlas-api/get-started-with-apis/index.md",
+  "sourceDirName": "snow-atlas-api/get-started-with-apis",
+  "slug": "/snow-atlas-api/get-started-with-apis/",
+  "permalink": "/snow-atlas-api/get-started-with-apis/",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 1,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "sidebar_position": 1
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Snow Atlas Beta API resources",
+    "permalink": "/snow-atlas-api/"
+  },
+  "next": {
+    "title": "API conventions",
+    "permalink": "/snow-atlas-api/get-started-with-apis/api-conventions"
+  }
+}

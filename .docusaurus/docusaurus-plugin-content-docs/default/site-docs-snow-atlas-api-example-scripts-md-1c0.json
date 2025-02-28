@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/example-scripts",
+  "id": "snow-atlas-api/example-scripts",
+  "title": "Example scripts",
+  "description": "Here you can find an example script to authenticate and an example script to export a list of computers using Snow Atlas APIs.",
+  "source": "@site/docs/snow-atlas-api/example-scripts.md",
+  "sourceDirName": "snow-atlas-api",
+  "slug": "/snow-atlas-api/example-scripts",
+  "permalink": "/snow-atlas-api/example-scripts",
+  "draft": false,
+  "editUrl": null,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 2,
+  "frontMatter": {
+    "custom_edit_url": null,
+    "sidebar_position": 2
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Rate limiting",
+    "permalink": "/snow-atlas-api/get-started-with-apis/rate-limiting"
+  },
+  "next": {
+    "title": "SAM Core APIs",
+    "permalink": "/snow-atlas-api/sam-core-apis/"
+  }
+}

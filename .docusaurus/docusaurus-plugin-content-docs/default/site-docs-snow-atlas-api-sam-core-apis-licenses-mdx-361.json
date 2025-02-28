@@ -1,0 +1,24 @@
+{
+  "unversionedId": "snow-atlas-api/sam-core-apis/licenses",
+  "id": "snow-atlas-api/sam-core-apis/licenses",
+  "title": "Licenses - Beta",
+  "description": "",
+  "source": "@site/docs/snow-atlas-api/sam-core-apis/licenses.mdx",
+  "sourceDirName": "snow-atlas-api/sam-core-apis",
+  "slug": "/snow-atlas-api/sam-core-apis/licenses",
+  "permalink": "/snow-atlas-api/sam-core-apis/licenses",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 6,
+  "frontMatter": {
+    "title": "Licenses - Beta",
+    "hide_table_of_contents": true,
+    "sidebar_position": 6
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Users Views - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/user-accounts-views"
+  }
+}

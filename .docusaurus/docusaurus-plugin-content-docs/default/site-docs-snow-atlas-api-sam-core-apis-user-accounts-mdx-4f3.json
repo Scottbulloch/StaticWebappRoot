@@ -1,0 +1,28 @@
+{
+  "unversionedId": "snow-atlas-api/sam-core-apis/user-accounts",
+  "id": "snow-atlas-api/sam-core-apis/user-accounts",
+  "title": "Users - Beta",
+  "description": "",
+  "source": "@site/docs/snow-atlas-api/sam-core-apis/user-accounts.mdx",
+  "sourceDirName": "snow-atlas-api/sam-core-apis",
+  "slug": "/snow-atlas-api/sam-core-apis/user-accounts",
+  "permalink": "/snow-atlas-api/sam-core-apis/user-accounts",
+  "draft": false,
+  "tags": [],
+  "version": "current",
+  "sidebarPosition": 3,
+  "frontMatter": {
+    "title": "Users - Beta",
+    "hide_table_of_contents": true,
+    "sidebar_position": 3
+  },
+  "sidebar": "tutorialSidebar",
+  "previous": {
+    "title": "Custom Fields - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/custom-fields"
+  },
+  "next": {
+    "title": "Users Views - Beta",
+    "permalink": "/snow-atlas-api/sam-core-apis/user-accounts-views"
+  }
+}
